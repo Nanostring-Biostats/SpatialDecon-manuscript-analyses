@@ -14,19 +14,20 @@ library(logNormReg)
 library(RColorBrewer)
 library(dendextend)
 library(ggplot2)
-source("spaceplot utils.R")
+library(here)
+source(here("fig 5 - NSCLC tumor analysis/code/spaceplot utils.R"))
 
 
 #### data loading ----------------------------------------
 name = "ICP20th"
 # load segment/AOI annotation:
-annot = read.table(paste0("data/", name, "_SegmentProperties.txt"), 
+annot = read.table(here("fig 5 - NSCLC tumor analysis/", paste0("data/", name, "_SegmentProperties.txt")), 
                    header = T, sep = "\t", quote = "", stringsAsFactors = F, comment.char = "")
 rownames(annot) = make.names(annot$Sample_ID)
 head(annot)
 
 # load xy coords and merge into annot:
-xy = read.csv("data/ICP20th_Lung11_grid_SampleSheet_20200207 - xy and nuclei.csv")
+xy = read.csv(here("fig 5 - NSCLC tumor analysis/data/ICP20th_Lung11_grid_SampleSheet_20200207 - xy and nuclei.csv"))
 rownames(xy) = make.names(xy$Sample_ID)
 xy$roiid = c()
 annot$x = xy[rownames(annot), "X.coordinate"]
@@ -34,7 +35,7 @@ annot$y = xy[rownames(annot), "Y.coordinate"]
 annot$nuclei =  xy[rownames(annot), "Cell.number"]
 
 # load gene/target annotations:
-geneannot = read.table(paste0("data/", name, "_TargetProperties.txt"),
+geneannot = read.table(here("fig 5 - NSCLC tumor analysis/", paste0("data/", name, "_TargetProperties.txt")),
                        header = T, sep = "\t", quote = "", stringsAsFactors = F, comment.char = "")
 rownames(geneannot) = geneannot$TargetName
 
@@ -43,12 +44,12 @@ allgenesets = unique(unlist(strsplit(geneannot$TargetGroup, ";")))
 genesets = matrix(NA, nrow(geneannot), length(allgenesets), dimnames = list(rownames(geneannot), allgenesets))
 
 # load raw counts:
-raw = as.matrix(read.table(paste0("data/", name, "_TargetCountMatrix.txt"),
+raw = as.matrix(read.table(here("fig 5 - NSCLC tumor analysis/", paste0("data/", name, "_TargetCountMatrix.txt")),
                            header = T, row.names = 1))
 raw[1:5,1:5]
 
 # load normalized data:
-negnorm = as.matrix(read.table(paste0("data/", name, "_NegNorm_TargetCountMatrix.txt"),
+negnorm = as.matrix(read.table(here("fig 5 - NSCLC tumor analysis/", paste0("data/", name, "_NegNorm_TargetCountMatrix.txt")),
                             header = T, row.names = 1))
 
 #norm = sweep(raw, 2, annot$NormFactorHK, "/")
@@ -252,7 +253,7 @@ g = ggplot(plotdf, aes(x = n, y = y, col = aoi)) +
         strip.text.x = element_text(size = 10), 
         legend.title = element_blank())
 
-svg("results/supp figure - decon results with vs. without tumor.svg", height = 10, width = 7.2)
+svg(here("fig 5 - NSCLC tumor analysis/results/supp figure - decon results with vs. without tumor.svg"), height = 10, width = 7.2)
 print(g)
 dev.off()
 
@@ -288,7 +289,7 @@ bound = getBoundary(annot$x, annot$y, marg = 0.1)
 
 # plots one cell at a time:
 for (cell in immcells) {
-  svg(paste0("results/cells in space granular - ", cell, ".svg"), width = 2, height = 2)
+  svg(here("fig 5 - NSCLC tumor analysis/", paste0("results/cells in space granular - ", cell, ".svg")), width = 2, height = 2)
   par(mar = c(0,0,0,0))
   plot(x = annot[roiindices$TME, "x"],
        y = annot[roiindices$TME, "y"],
@@ -303,7 +304,7 @@ for (cell in immcells) {
 
 
 ### plot cell scores ~ space
-svg("results//florets - cells in space - legend.svg", width = 4.75, height = 4)
+svg(here("fig 5 - NSCLC tumor analysis/results/florets - cells in space - legend.svg"), width = 4.75, height = 4)
 par(mar = c(0,0,0,0))
 # legend:
 plot(0, 0, col = 0, xlim = c(-2, 2), ylim = c(-1.75, 1.75), xaxt = "n", yaxt = "n", xlab = "", ylab = "",
@@ -326,7 +327,7 @@ for (j in 1:length(b)) {
 }
 dev.off()
 
-svg("results//florets - cells in space.svg")
+svg("fig 5 - NSCLC tumor analysis/results/florets - cells in space.svg")
 par(mar = c(0,0,0,0))
 florets(x = annot[roiindices$TME, "x"],
         y = annot[roiindices$TME, "y"],
@@ -374,7 +375,7 @@ names(clustcols) = c("O", "M", "T8", 'T4', "LT", "LB", "LM")
 
 
 dev.off()
-svg("results/decon heatmap - TME only.svg", height = 3, width = 8)
+svg(here("fig 5 - NSCLC tumor analysis/results/decon heatmap - TME only.svg"), height = 3, width = 8)
 pheatmap(pmin(res$cell.counts[p1$tree_row$order, use][, o], 100),
          col = viridis_pal(option = "B")(100),
          show_colnames = F,
@@ -382,7 +383,7 @@ pheatmap(pmin(res$cell.counts[p1$tree_row$order, use][, o], 100),
 dev.off()
 
 
-svg("results/decon barplot - props - TME only.svg", height = 3, width = 8.1)
+svg(here("fig 5 - NSCLC tumor analysis/results/decon barplot - props - TME only.svg"), height = 3, width = 8.1)
 layout(mat = c(1,2,3), height = c(1.5, 2.5, 1.5))
 par(mar = c(.2,0,0,3))
 plot(color_branches(as.dendrogram(p1$tree_col), 
@@ -417,7 +418,7 @@ axis(4, at = c(0, 400, 800, 1200), las = 2)
 dev.off()
 
 
-svg(paste0("results/clusters in space.svg"), width = 5, height = 4)
+svg(here("fig 5 - NSCLC tumor analysis/", paste0("results/clusters in space.svg")), width = 5, height = 4)
 layout(mat = matrix(c(1,2), nrow = 1), widths = c(8, 2))
 par(mar = c(0,0,0,0))
 plot(annot[names(clusts), "x"], annot[names(clusts), "y"],
