@@ -10,11 +10,10 @@ library(ggthemes)
 library(here)
 
 #### load data --------------------------------
-folderpath = "fig 4 - serial sections validation"
-rna = as.matrix(read.csv(here(folderpath, "data", "raw RNA counts.csv"), row.names = 1, header = T, stringsAsFactors = F))
-prot = as.matrix(read.csv(here(folderpath, "data", "raw prot counts.csv"), row.names = 1, header = T, stringsAsFactors = F))
-annot = read.csv(here(folderpath, "data", "AOI annotations.csv"), row.names = 1, header = T, stringsAsFactors = F)
 
+rna = as.matrix(read.csv(here("fig 4 - serial sections validation/data/raw RNA counts.csv"), row.names = 1, header = T, stringsAsFactors = F))
+prot = as.matrix(read.csv(here("fig 4 - serial sections validation/data/raw prot counts.csv"), row.names = 1, header = T, stringsAsFactors = F))
+annot = read.csv(here("fig 4 - serial sections validation/data/AOI annotations.csv"), row.names = 1, header = T, stringsAsFactors = F)
 
 
 # color by AOI type (tumor vs TME):
@@ -65,8 +64,7 @@ pnorm = sweep(prot, 1, annot$iggfactor, "/")
 #### prep RNA data for decon run -----------------------------
 
 # load ICP gene list:
-icpgenes = read.csv(here(folderpath, "data", "ICP gene list.csv"), stringsAsFactors = F, header = F)[, 1]
-
+icpgenes = read.csv(here("fig 4 - serial sections validation/data/ICP gene list.csv"), stringsAsFactors = F, header = F)[, 1]
 
 # get expected background matrix
 bg = rna * 0
@@ -79,13 +77,11 @@ norm = rna / bg
 
 #### save data for benchmarking dataset --------------------------------
 
-write.csv(annot[, c("tissue", "AOI_type")], file = here(folderpath, "benchmarking_data", "segment_annotations.csv"))
-write.csv(norm, file = here(folderpath, "benchmarking_data", "normalized_rna.csv"))
-write.csv(rna, file = here(folderpath, "benchmarking_data", "raw_rna.csv"))
-write.csv(pnorm, file = here(folderpath, "benchmarking_data", "normalized_protein.csv"))
-write.csv(prot, file = here(folderpath, "benchmarking_data", "raw_protein.csv"))
-
-
+write.csv(annot[, c("tissue", "AOI_type")], file = "benchmarking_data/segment_annotations.csv")
+write.csv(norm, file = here("fig 4 - serial sections validation/benchmarking_data/normalized_rna.csv"))
+write.csv(rna, file = here("fig 4 - serial sections validation/benchmarking_data/raw_rna.csv"))
+write.csv(pnorm, file = here("fig 4 - serial sections validation/benchmarking_data/normalized_protein.csv"))
+write.csv(prot, file = here("fig 4 - serial sections validation/benchmarking_data/raw_protein.csv"))
 
 #### run decon --------------------------------------
 # run initial decon without tumor:
@@ -105,7 +101,7 @@ res = spatialdecon(norm = norm,
 
 rlist = list(res0 = res0, res = res)
 
-write.csv(res$beta, file = here(folderpath, "results", "cell abundance estimates.csv"))
+write.csv(res$beta, file = here("fig 4 - serial sections validation/results/cell abundance estimates.csv"))
 
 
 #### compare decon vs. prot -------------------------------------------
@@ -156,7 +152,7 @@ plotdf$protid = factor(plotdf$protid,
                                   "SMA protein\nvs. fibroblasts"))
 
 #### plot prot vs. cell estimate, faceted by patient/ cell:
-svg(here(folderpath, "results", "serial sections - prot vs cell scores.svg"), width = 10, height = 9)
+svg(here("fig 4 - serial sections validation/results/serial sections - prot vs cell scores.svg"), width = 10, height = 9)
 g = ggplot(data = plotdf, aes(x = protexpr, y = betahat, col = AOI_type)) + 
   geom_point(alpha = 0.5, size = 2) +
   facet_grid(tumor ~ protid, scales = "free") +
@@ -188,7 +184,7 @@ for (tiss in unique(annot$tissue)) {
   }
 }
 
-write.csv(round(sapply(cors, colMeans), 3), file = here(folderpath, "results", "supp table - prot vs. cell cor with and without tumor modelling.csv"))
+write.csv(round(sapply(cors, colMeans), 3), file = here("fig 4 - serial sections validation/results/supp table - prot vs. cell cor with and without tumor modelling.csv"))
 
-write.csv(cors$res, file = here(folderpath, "results", "correlations per tissue and per cell.csv"))
+write.csv(cors$res, file = here("fig 4 - serial sections validation/results/correlations per tissue and per cell.csv"))
 

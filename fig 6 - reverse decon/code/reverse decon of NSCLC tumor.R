@@ -7,19 +7,16 @@ library(SpatialDecon)
 library(scales)
 library(circlize)
 library(umap)
-library(here)
 
 #### load grid data from earlier script:
 
-folderpath <- "fig 6 - reverse decon"
-load(here(folderpath, "data", "191 grid decon results.RData"))
+load("191 grid decon results.RData")
 aoicols = c("chartreuse2", "darkcyan")  
 names(aoicols) = c("Tumor", "TME")
 
 
 # infer polygon:
-load(here(folderpath, "code", "spaceplot utils.R"))
-
+source("spaceplot utils.R")
 bound = getBoundary(annot$x, annot$y, marg = 0.1)
 
 #### model expression ~ cells -------------------------
@@ -57,7 +54,7 @@ for (atype in c("Tumor", "TME")) {
   }
 }
 
-save(ests, file = here(folderpath, "results", "gene vs cells nlm results.RData"))
+save(ests, file = "gene vs cells nlm results.RData")
 
 # now get yhats:
 yhat = snr * NA
@@ -92,8 +89,7 @@ colorresids = function(x) {
 
 # 
 gene = "COL1A1"
-svg(here(folderpath, "results", "cartoon of residuals.svg"), width = 6, height = 6)
-
+svg("results/cartoon of residuals.svg", width = 6, height = 6)
 par(mar = c(5,5,2,1))
 plot(yhat[gene, roiindices$TME],
      snr[gene, roiindices$TME],
@@ -114,7 +110,7 @@ p0 = pheatmap(t(scale(t(log2(snr[, roiindices$TME]))))[o100, 1:100],
 
 
 # snr:
-svg(here(folderpath, "results", "fig 6a - cartoon of expression.svg"), width = 8, height = 6)
+svg("results/fig 6a - cartoon of expression.svg", width = 8, height = 6)
 pheatmap(t(scale(t(log2(snr[, roiindices$TME]))))[o100, 1:100][p0$tree_row$order, p0$tree_col$order],
          #colorRampPalette(c("blue", "white", "orange"))(100),
          breaks = seq(-3,3,length.out = 101),
@@ -124,7 +120,7 @@ pheatmap(t(scale(t(log2(snr[, roiindices$TME]))))[o100, 1:100][p0$tree_row$order
 dev.off()
 
 # yhat:
-svg(here(folderpath, "results", "fig 6a - cartoon of yhat.svg"), width = 8, height = 6)
+svg("results/fig 6a - cartoon of yhat.svg", width = 8, height = 6)
 pheatmap(t(scale(t(log2(pmax(yhat, 1)[, roiindices$TME]))))[o100, 1:100][p0$tree_row$order, p0$tree_col$order],
          #colorRampPalette(c("blue", "white", "orange"))(100),
          breaks = seq(-3,3,length.out = 101),
@@ -135,7 +131,7 @@ dev.off()
 
 
 # resids:
-svg(here(folderpath, "results", "fig 6a - cartoon of resids.svg"), width = 8, height = 6)
+svg("results/fig 6a - cartoon of resids.svg", width = 8, height = 6)
 pheatmap(resids[, roiindices$TME][o100, 1:100][p0$tree_row$order, p0$tree_col$order],
          col = colorRampPalette(c("darkblue", "white", "darkred"))(100),
          breaks = seq(-2,2,length.out = 101),
@@ -157,7 +153,7 @@ p1 = pheatmap((pmin(res$cell.counts[, roiindices$TME], 100)),
               cluster_rows = T, cluster_cols = T,
               legend = F)
 dev.off()
-svg(here(folderpath, "results", "fig 6a - cartoon beta heatmap.svg"), width = 1.5, height = .5)
+svg("results/fig 6a - cartoon beta heatmap.svg", width = 1.5, height = .5)
 pheatmap((pmin(res$cell.counts[, roiindices$TME], 100))[p1$tree_row$order, p1$tree_col$order],
          col = viridis_pal(option = "B")(100),
          show_colnames = F, show_rownames = F,
@@ -184,7 +180,7 @@ showgenes = c("MT1M", "CCL19", "ARG1", "PDCD1")
 
 
 #### fig 6b: plot cor vs resid sd --------------------------
-svg(here(folderpath, "results", "genes - cor w cells vs. resid SD.svg"))
+svg("results/genes - cor w cells vs. resid SD.svg")
 par(mar = c(5,5,1,1))
 plot(cors, apply(resids[, roiindices$TME], 1, sd), 
      xlim = c(0.2, 1),
@@ -206,8 +202,9 @@ dev.off()
 
 
 
+
 #### fig 6c: plot exemplar genes -----------------------
-svg(here(folderpath, "results", "resids - example genes.svg"))
+svg("results/resids - example genes.svg")
 par(mar = c(2,2,1,1))
 par(mfrow = c(2,2))
 yrange = 100
@@ -232,7 +229,7 @@ dev.off()
 
 finalgenes = c("CXCL13", "LYZ",  "CCL17")
 use = annot$AOI.name == "TME"
-svg(here(folderpath, "results", "resids in space - selected genes.svg"), height = 7, width = 4.5)
+svg("results/resids in space - selected genes.svg", height = 7, width = 4.5)
 par(mfrow = c(3, 2))
 for (gene in finalgenes) {
   
