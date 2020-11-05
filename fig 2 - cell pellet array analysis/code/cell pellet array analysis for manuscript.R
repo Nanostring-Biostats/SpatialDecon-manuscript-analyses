@@ -7,13 +7,14 @@ library(NormqPCR)
 library(scales)
 library(ggplot2)
 library(ggthemes)
+library(here)
 source("deconvolution functions - NNLS and vSVR.R")
 
 #### load CPA data: (HEK293 mixture) ---------------------
 
-raw = t(as.matrix(read.csv("../data/HEK393-CCRF mixture raw data.csv", row.names = 1, header = T, stringsAsFactors = F)))
-annot = read.csv("../data/HEK393-CCRF mixture AOI annotations.csv", row.names = 1, header = T, stringsAsFactors = F)
-pnotes = read.csv("../data/HEK393-CCRF mixture probe notes.csv", stringsAsFactors = F, row.names = 1)
+raw = t(as.matrix(read.csv(here("fig 2 - cell pellet array analysis/data/HEK393-CCRF mixture raw data.csv"), row.names = 1, header = T, stringsAsFactors = F)))
+annot = read.csv(here("fig 2 - cell pellet array analysis/data/HEK393-CCRF mixture AOI annotations.csv"), row.names = 1, header = T, stringsAsFactors = F)
+pnotes = read.csv(here("fig 2 - cell pellet array analysis/data/HEK393-CCRF mixture probe notes.csv"), stringsAsFactors = F, row.names = 1)
 
 
 #### normalize raw data: -----------------------
@@ -30,7 +31,7 @@ hks = genorm$ranking[1:27]
 annot$hk.factor = exp(colMeans(log(raw[hks, ])))
 norm = sweep(raw, 2, annot$hk.factor, "/") * mean(annot$hk.factor)
 
-write.csv(norm, file = "../results/HK normalized data.csv")
+write.csv(norm, file = here("fig 2 - cell pellet array analysis/results/HK normalized data.csv"))
 
 # estimate background in the normalized data: (separately for each probe pool):
 probes.b = make.names(rownames(pnotes)[pnotes$Module == "bkp"])
@@ -103,7 +104,7 @@ g = ggplot(plota, aes(x = hek, y = ccrf, col = inset)) +
         strip.text.x = element_text(size = 13), 
         strip.text.y = element_text(size = 15)) 
   
-svg("../results/fig 2a.svg", width = 9.8, height = 3.2)
+svg(here("fig 2 - cell pellet array analysis/results/fig 2a.svg"), width = 9.8, height = 3.2)
 print(g)
 dev.off()
 
@@ -167,7 +168,7 @@ g = ggplot(plotdf, aes(x = obs, y = est, col = gset0)) +
         strip.text.y = element_text(size = 15), 
         legend.position = "none") +
   geom_abline(intercept = 0, slope = 1, col = rgb(0,0,0,0.3))
-svg("../results/fig 2b.svg", width = 10, height = 7.5)
+svg(here("fig 2 - cell pellet array analysis/results/fig 2b.svg"), width = 10, height = 7.5)
 print(g)
 dev.off()
 
@@ -190,7 +191,7 @@ round(cors,3)
 round(mads,2)
 round(maxdelta,2)
 round(mses,3)
-write.csv(round(mses, 3), file = "../results/rMSEs of decon fits.csv")
+write.csv(round(mses, 3), file = here("fig 2 - cell pellet array analysis/results/rMSEs of decon fits.csv"))
 
 
 #### Assess influence of genes on decon:
@@ -244,7 +245,7 @@ y.loo[names(bad),1]
 
 
 # show influence with point size:
-svg("../results/fig 2c - influence of genes when removed.svg", width = 13, height = 4)
+svg(here('fig 2 - cell pellet array analysis/results/fig 2c - influence of genes when removed.svg'), width = 13, height = 4)
 layout(mat = matrix(1:4, 1), width = c(3.5, 3.5, 3.5, 2.5))
 for (mname in c("NNLS", "vSVR", "lognorm")) {
   if (mname == "NNLS") {main = "NNLS"}
