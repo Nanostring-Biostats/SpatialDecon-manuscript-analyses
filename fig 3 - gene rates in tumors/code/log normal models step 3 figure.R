@@ -102,45 +102,47 @@ pl <- ggplot(res_long, aes(x = value, y = cancer, fill = stat(x))) +
 
 ## generate the scatterplot for eight panels   
 ### filter out cancer types 
-filesList <- list.files(here("fig 3 - gene rates in tumors", "output"), ".RData")
-mergedatList <- NULL
-for(file in filesList){
-  load(here("fig 3 - gene rates in tumors", "output", file))
-  load(here("fig 3 - gene rates in tumors", "data", gsub("_res.rdata", ".rdata", file)))
-  cancer <- gsub("_res.rdata", "", file)
-  
-  ## exclude several cancer types for plotting 
-  if(file %in% c("LAML_res.rdata", "DLBC_res.rdata", "THYM_res.rdata")){
-    next
+if(FALSE){ ## not run due to unavailability of the TCGA raw data
+  filesList <- list.files(here("fig 3 - gene rates in tumors", "output"), ".RData")
+  mergedatList <- NULL
+  for(file in filesList){
+    load(here("fig 3 - gene rates in tumors", "output", file))
+    load(here("fig 3 - gene rates in tumors", "data", gsub("_res.rdata", ".rdata", file)))
+    cancer <- gsub("_res.rdata", "", file)
+    
+    ## exclude several cancer types for plotting 
+    if(file %in% c("LAML_res.rdata", "DLBC_res.rdata", "THYM_res.rdata")){
+      next
+    }
+    
+    dat <- get(paste0(cancer,".dat.subset"))$e
+    dat <- dat[, -which(colSums(dat)==0)]
+    
+    if(length(which(duplicated(colnames(dat))))>0){
+      dat <- dat[, -which(duplicated(colnames(dat)))]
+    }
+    
+    ## collect the average expression level across cancer types 
+    meandat <- data.frame(gene = colnames(dat), 
+                          mean = apply(log2(dat+1), 2, mean),
+                          count = nrow(dat), 
+                          stringsAsFactors = FALSE)
+    
+    ## combine the average expression level with the intercept terms (beta0) from the log normal models 
+    res$gene <- as.character(res$gene)
+    colnames(res)[3] <- "beta0"
+    
+    mergedat <- inner_join(meandat, res[, c("gene", "beta0")], by = "gene")
+    rownames(mergedat) <- mergedat$gene
+    mergedat$type <- cancer
+    mergedatList[[cancer]] <- mergedat[uniqueGene,]
   }
-  
-  dat <- get(paste0(cancer,".dat.subset"))$e
-  dat <- dat[, -which(colSums(dat)==0)]
-  
-  if(length(which(duplicated(colnames(dat))))>0){
-    dat <- dat[, -which(duplicated(colnames(dat)))]
-  }
-  
-  ## collect the average expression level across cancer types 
-  meandat <- data.frame(gene = colnames(dat), 
-                        mean = apply(log2(dat+1), 2, mean),
-                        count = nrow(dat), 
-                        stringsAsFactors = FALSE)
-  
-  ## combine the average expression level with the intercept terms (beta0) from the log normal models 
-  res$gene <- as.character(res$gene)
-  colnames(res)[3] <- "beta0"
-  
-  mergedat <- inner_join(meandat, res[, c("gene", "beta0")], by = "gene")
-  rownames(mergedat) <- mergedat$gene
-  mergedat$type <- cancer
-  mergedatList[[cancer]] <- mergedat[uniqueGene,]
 }
-
 
 # load the gene lists from eight panels and the color scheme
 load(here("fig 3 - gene rates in tumors", "data", "gene", "gene.rdata"))
 load(here("fig 3 - gene rates in tumors", "data", "gene", "cellcols.RData"))
+load(here("fig 3 - gene rates in tumors", "data", "mergedatList.rdata"))
 
 ## beta0 across TCGA cancer type
 ntotal <- unique(rowSums(sapply(mergedatList, 
@@ -165,7 +167,7 @@ for(k in 1:8){
   
   if (k == 7){
     geneshighlight <- read_excel(here("fig 3 - gene rates in tumors", 
-                                      "data", "gene", "nanostring",
+                                      "data", "gene", "Nanostring",
                                       "40425_2017_215_MOESM1_ESM.xlsx"), 
                                  sheet = "S4. Selected markers", 
                                  col_names = c("gene", "cell"), skip = 1)
@@ -212,7 +214,7 @@ gb2 <- grid.grabExpr(draw(pr, padding  = unit(c(1.1, 0, 0, 0), "cm")))
 p <- (gb1 + gb2 + plot_layout(widths = c(1, 2)))/pb +  
   plot_layout(heights = c(1, 1)) + plot_annotation(tag_levels = c('a'))
 
-ggsave(file = here("fig 3 - gene rates in tumors", "output", "img", paste0("combined.png")),
+ggsave(file = here("fig 3 - gene rates in tumors", "output", paste0("combined.png")),
        dpi = 300, type = "cairo",
        width = 10, height = 11)
 
