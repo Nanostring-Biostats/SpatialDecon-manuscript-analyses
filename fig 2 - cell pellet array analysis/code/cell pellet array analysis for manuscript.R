@@ -7,14 +7,14 @@ library(NormqPCR)
 library(scales)
 library(ggplot2)
 library(ggthemes)
-library(here)
-source("deconvolution functions - NNLS and vSVR.R")
+source("deconvolution functions - NNLS and vSVR and DWLS.R")
+source("DWLS_functions.R")
 
 #### load CPA data: (HEK293 mixture) ---------------------
 
-raw = t(as.matrix(read.csv(here("fig 2 - cell pellet array analysis/data/HEK393-CCRF mixture raw data.csv"), row.names = 1, header = T, stringsAsFactors = F)))
-annot = read.csv(here("fig 2 - cell pellet array analysis/data/HEK393-CCRF mixture AOI annotations.csv"), row.names = 1, header = T, stringsAsFactors = F)
-pnotes = read.csv(here("fig 2 - cell pellet array analysis/data/HEK393-CCRF mixture probe notes.csv"), stringsAsFactors = F, row.names = 1)
+raw = t(as.matrix(read.csv("../data/HEK393-CCRF mixture raw data.csv", row.names = 1, header = T, stringsAsFactors = F)))
+annot = read.csv("../data/HEK393-CCRF mixture AOI annotations.csv", row.names = 1, header = T, stringsAsFactors = F)
+pnotes = read.csv("../data/HEK393-CCRF mixture probe notes.csv", stringsAsFactors = F, row.names = 1)
 
 
 #### normalize raw data: -----------------------
@@ -31,7 +31,7 @@ hks = genorm$ranking[1:27]
 annot$hk.factor = exp(colMeans(log(raw[hks, ])))
 norm = sweep(raw, 2, annot$hk.factor, "/") * mean(annot$hk.factor)
 
-write.csv(norm, file = here("fig 2 - cell pellet array analysis/results/HK normalized data.csv"))
+#write.csv(norm, file = "../results/HK normalized data.csv")
 
 # estimate background in the normalized data: (separately for each probe pool):
 probes.b = make.names(rownames(pnotes)[pnotes$Module == "bkp"])
@@ -47,90 +47,34 @@ X = cbind(apply(norm[, annot$mixprop == 1], 1, median),
 colnames(X) = c("HEK293T", "CCRF-CEM")
 X[, 2] = X[, 2] * exp(median(log(X[, 1]))) / exp(median(log(X[, 2])))
 
-#### define gene subsets: --------------------------------------
-plot(pmax(X, 1), log = "xy")
-abline(0, 1)
-
-genesets = list()
-genesets[["all"]] = rownames(X)
-genesets[["informative"]] = names(which(abs(log(X[, 1]) - log(X[, 2])) > 1.5))
-genesets[["uninformative"]] = names(which(abs(log(X[, 1]) - log(X[, 2])) <= 1.5))
-genesets[["nothigh"]] = names(which((apply(X, 1, max) < 1000)))
-
-points(X[genesets[["informative"]], ], col = 2)
-points(X[genesets[["uninformative"]], ], col = 3)
-points(X[genesets[["nothigh"]], ], col = 4)
-
-par(mfrow = c(1,4))
-for (gsname in names(genesets)) {
-  plot(pmax(X, 1), log = "xy", pch = 16, main = gsname,
-       col = c(alpha("grey50", 0.3), alpha("orange", 0.5))[1 + is.element(rownames(X), genesets[[gsname]])])
-  abline(0, 1)
-}
-
-# ggplot of gene sets:
-hek = ccrf = gset = inset = c()
-for (gname in names(genesets)) {
-  hek = c(hek, X[, "HEK293T"])
-  ccrf = c(ccrf, X[, "CCRF-CEM"])
-  gset = c(gset, rep(gname, nrow(X)))
-  inset = c(inset, c("out", "in")[1 + is.element(rownames(X), genesets[[gname]])])
-}
-
-setcols = c(alpha("grey60", 0.3), alpha("orange", 0.5))
-names(setcols) = c("out", "in")
-
-gsetcols = c("grey50", "#000066", "#006633",  "#FF0000", "#CC9900") #"#660033"(purpleish),
-names(gsetcols) = c("out", "informative", "uninformative", "all", "nothigh")
-
-plota = data.frame(hek = hek, ccrf = ccrf, gset = gset, inset = inset, stringsAsFactors = F)
-plota$inset[plota$inset == "in"] = as.character(plota$gset)[plota$inset == "in"]
-plota$gset[plota$gset == "all"] = "all genes"
-plota$gset[plota$gset == "informative"] = "most informative genes"
-plota$gset[plota$gset == "uninformative"] = "least informative genes"
-plota$gset[plota$gset == "nothigh"] = "low-medium expressors"
-plota$gset = factor(plota$gset, levels = c("most informative genes", "least informative genes", "all genes", "low-medium expressors"))
-g = ggplot(plota, aes(x = hek, y = ccrf, col = inset)) + 
-  geom_point(alpha = 0.5, size = 0.75) + 
-  scale_color_manual(values = gsetcols) + 
-  scale_x_continuous(trans='log10') + 
-  scale_y_continuous(trans='log10') +
-  facet_wrap(~gset, nrow = 1) +
-  theme_few() +
-  labs(x = "Expression in HEK293T", y = "Expression in CCRF-CEM") + 
-  theme(legend.position = "none") +
-  theme(axis.title.x = element_text(size = 17), 
-        axis.title.y = element_text(size = 17),
-        strip.text.x = element_text(size = 13), 
-        strip.text.y = element_text(size = 15)) 
-  
-svg(here("fig 2 - cell pellet array analysis/results/fig 2a.svg"), width = 9.8, height = 3.2)
-print(g)
-dev.off()
 
 #### run deconvolution under loglinear, NNLS, v-SVR: ---------------------------------
 
-res = list()
-for (gsname in names(genesets)) {
-  res[[gsname]] = list()
-  tempY = norm[genesets[[gsname]], ]
-  tempX = X[genesets[[gsname]], ]
-  tempbg = bg[genesets[[gsname]], ]
-  res[[gsname]][["NNLS"]] = deconUsingConstrainedLM(Y = tempY, X = tempX, bg = tempbg)
-  res[[gsname]][["vSVR"]] = deconSVR(Y = tempY, X = tempX, bg = tempbg)
-  res[[gsname]][["lognorm"]] = deconLNR(Y = tempY, X = tempX, bg = tempbg)
-  save(res, file = "competing decon results.RData")
+if (FALSE) {
+  res = list()
+    res[["all"]] = list()
+    tempY = norm[genesets[["all"]], ]
+    tempX = X[genesets[["all"]], ]
+    tempbg = bg[genesets[["all"]], ]
+    res[["all"]][["NNLS"]] = deconUsingConstrainedLM(Y = tempY, X = tempX, bg = tempbg)
+    res[["all"]][["vSVR"]] = deconSVR(Y = tempY, X = tempX, bg = tempbg)
+    res[["all"]][["lognorm"]] = deconLNR(Y = tempY, X = tempX, bg = tempbg)
+    res[["all"]][["dwls"]] = deconUsingDWLS(Y = tempY, X = tempX, bg = tempbg)
+    save(res, file = "competing decon results with dwls.RData")
 }
+load("competing decon results with dwls.RData")
 
 
 #### compare decon performance:
 
+## plots:
 
 # assemble data frame for ggplot:
 est = obs = meth = gset = c()
 par(mfrow = c(length(res[[1]]), length(res)))
 for (mname in names(res[[1]])) {
-  for (gsname in names(res)) {
+  #for (gsname in names(res)) {
+  for (gsname in c("all")) {
     tempbeta = res[[gsname]][[mname]]$beta
     est = c(est, tempbeta[1, ] / colSums(tempbeta))
     obs = c(obs, annot$mixprop)
@@ -141,34 +85,27 @@ for (mname in names(res[[1]])) {
 
 plotdf = data.frame(est = est, obs = obs, meth = meth, gset = gset, stringsAsFactors = F)
 
-# rename methods for plottig:
+# rename methods for plotting:
 plotdf$meth[plotdf$meth == "lognorm"] = "log-normal"
 plotdf$meth[plotdf$meth == "vSVR"] = "v-SVR"
-plotdf$meth = factor(plotdf$meth, levels = c("NNLS", "v-SVR", "log-normal"))
-
-# rename gene sets for plottig:
-plotdf$gset0 = plotdf$gset
-plotdf$gset[plotdf$gset == "all"] = "all genes"
-plotdf$gset[plotdf$gset == "informative"] = "most informative genes"
-plotdf$gset[plotdf$gset == "uninformative"] = "least informative genes"
-plotdf$gset[plotdf$gset == "nothigh"] = "low-medium expressors"
-plotdf$gset = factor(plotdf$gset, levels = c("most informative genes", "least informative genes", "all genes", "low-medium expressors"))
+plotdf$meth[plotdf$meth == "dwls"] = "DWLS"
+plotdf$meth = factor(plotdf$meth, levels = c("NNLS", "v-SVR", "DWLS", "log-normal"))
 
 # plot true vs observed proportions:
-g = ggplot(plotdf, aes(x = obs, y = est, col = gset0)) +
-  scale_color_manual(values = gsetcols) + 
+g = ggplot(plotdf, aes(x = obs, y = est)) +
+  #scale_color_manual(values = gsetcols) + 
   #geom_point(col = I(alpha("dodgerblue4", 0.5)), size = I(2)) +
-  geom_point(size = 2, alpha = 0.5) +
-  facet_grid(meth ~ gset) + 
+  geom_point(col = I("darkblue"), size = 2, alpha = 0.5) +
+  facet_wrap(~meth, nrow = 1) + 
   theme_few() + 
   labs(x = "True proportion HEK293T", y = "Estimated proportion HEK293T") + 
-  theme(axis.title.x = element_text(size = 17), 
-        axis.title.y = element_text(size = 17),
+  theme(axis.title.x = element_text(size = 13), 
+        axis.title.y = element_text(size = 13),
         strip.text.x = element_text(size = 13), 
         strip.text.y = element_text(size = 15), 
         legend.position = "none") +
   geom_abline(intercept = 0, slope = 1, col = rgb(0,0,0,0.3))
-svg(here("fig 2 - cell pellet array analysis/results/fig 2b.svg"), width = 10, height = 7.5)
+svg("../results/fig 2a.svg", width = 10, height = 3)
 print(g)
 dev.off()
 
@@ -177,7 +114,8 @@ maxdelta = mads = mses = cors = matrix(NA, length(res[[1]]), length(res),
               dimnames = list(names(res[[1]]), names(res)))
 par(mfrow = c(length(res[[1]]), length(res)))
 for (mname in names(res[[1]])) {
-  for (gsname in names(res)) {
+#  for (gsname in names(res)) {
+  for (gsname in c("all")) {
     tempbeta = res[[gsname]][[mname]]$beta
     tempprop = tempbeta[1, ] / colSums(tempbeta)
     cors[mname, gsname] = cor(annot$mixprop, tempprop)
@@ -191,7 +129,7 @@ round(cors,3)
 round(mads,2)
 round(maxdelta,2)
 round(mses,3)
-write.csv(round(mses, 3), file = here("fig 2 - cell pellet array analysis/results/rMSEs of decon fits.csv"))
+write.csv(round(mses, 3), file = "../results/rMSEs of decon fits.csv")
 
 
 #### Assess influence of genes on decon:
@@ -211,8 +149,14 @@ bg.loo = sweep(y.loo * 0, 1, bg[, oneaoi], "+")
 lres = list()
 lres[["NNLS"]] = deconUsingConstrainedLM(Y = y.loo, X = X, bg = bg.loo)
 lres[["lognorm"]] = deconLNR(Y = y.loo, X = X, bg = bg.loo)
+save(lres, file = "decon results in leave one out study.RData")
+#save(list = ls(), file = "timesnap.RData")
 lres[["vSVR"]] = deconSVR(Y = y.loo, X = X, bg = bg.loo)
 colnames(lres$vSVR$beta) = colnames(lres$NNLS$beta)
+save(lres, file = "decon results in leave one out study - all 3.RData")
+lres[["dwls"]] = deconUsingDWLS(Y = y.loo, X = X, bg = bg.loo)
+save(lres, file = "decon results in leave one out study - all 3.RData")
+
 for (name in names(lres)) {
   lres[[name]]$prop = lres[[name]]$beta[1, ] / colSums(lres[[name]]$beta)
 }
@@ -226,6 +170,10 @@ for (mname in names(lres)) {
   betasse = cbind(betasse, sqrt(colSums(sweep(tempbeta, 1, tempbeta[, 1], "-")^2)))
 }
 colnames(propdeltas) = colnames(betasse) = names(lres)
+#rownames(propdeltas) = rownames(betasse) = c("all", genesubset)
+
+
+# how big was the delta for each method when that gene was removed?
 
 
 # identify the gene with the biggest impact:
@@ -233,6 +181,8 @@ tempg = rownames(propdeltas)[order(abs(propdeltas[, "NNLS"]), decreasing = T)[1]
 print(c(lres$NNLS$prop[1], lres$NNLS$prop[tempg]))
 tempg = rownames(propdeltas)[order(abs(propdeltas[, "vSVR"]), decreasing = T)[1]]
 print(c(lres$vSVR$prop[1], lres$vSVR$prop[tempg]))
+tempg = rownames(propdeltas)[order(abs(propdeltas[, "dwls"]), decreasing = T)[1]]
+print(c(lres$lognorm$prop[1], lres$lognorm$prop[tempg]))
 tempg = rownames(propdeltas)[order(abs(propdeltas[, "lognorm"]), decreasing = T)[1]]
 print(c(lres$lognorm$prop[1], lres$lognorm$prop[tempg]))
 
@@ -245,14 +195,16 @@ y.loo[names(bad),1]
 
 
 # show influence with point size:
-svg(here('fig 2 - cell pellet array analysis/results/fig 2c - influence of genes when removed.svg'), width = 13, height = 4)
-layout(mat = matrix(1:4, 1), width = c(3.5, 3.5, 3.5, 2.5))
-for (mname in c("NNLS", "vSVR", "lognorm")) {
+#svg("../results/fig 2b - influence of genes when removed.svg", width = 13, height = 4)
+#par(mfrow = c(1, length(lres) + 1))
+layout(mat = matrix(1:5, 1), width = c(3.5, 3.5, 3.5, 3.5, 2.5))
+for (mname in c("NNLS", "vSVR", "dwls", "lognorm")) {
   if (mname == "NNLS") {main = "NNLS"}
   if (mname == "lognorm") {main = "log-normal"}
   if (mname == "vSVR") {main = "v-SVR"}
+  if (mname == "dwls") {main = "DWLS"}
   plot(X, pch = 16, cex = (abs(propdeltas[-1, mname]) / max(abs(propdeltas[-1, ]))) * 20 + .3, 
-       log = "xy", col = alpha(gsetcols["all"], 0.5), main = main,
+       log = "xy", col = alpha("darkblue", 0.5), main = main,
        xlab = paste0("Expression in ", colnames(X)[1]),
        ylab = paste0("Expression in ", colnames(X)[2]),
        cex.lab = 1.5, cex.main = 1.5)
@@ -263,10 +215,76 @@ par(mar = c(5,.1,2,.1))
 plot(c(0,0), xlim = c(0, 1), ylim = c(0,1), xaxt = "n", yaxt = "n", xlab = "", ylab = "", col = 0, bty = "n")
 points(rep(.4, 5), seq(0, .75, length.out = 5), 
        cex = seq(0, 1, length.out = 5) * 20 + .3,
-       pch = 16, col = alpha(gsetcols["all"], 0.5))
+       pch = 16, col = alpha("darkblue", 0.5))
 text(rep(.7, 5), seq(0, .75, length.out = 5), 
      labels = seq(0, signif(max(abs(propdeltas)), 0.2), length.out = 5))
 text(.5, .9, labels = "Change in estimated cell\nproportion when removed", cex = 1.3)
+#dev.off()
+
+#save(list = ls(), file = "analysis snapshot.RData")
+## ggplot version of the above for uniformity:
+
+
+hek = ccrf = propdelta = model = c()
+for (name in colnames(propdeltas)) {
+  hek = c(hek, X[, "HEK293T"])
+  ccrf = c(ccrf, X[, "CCRF-CEM"])
+  propdelta = c(propdelta, propdeltas[rownames(X), name])
+  model = c(model, rep(name, nrow(X)))
+}
+df = data.frame(hek = hek, ccrf = ccrf, meth = model, propdelta = abs(propdelta) + 0.01)
+
+# rename methods for plotting:
+df$meth[df$meth == "lognorm"] = "log-normal"
+df$meth[df$meth == "vSVR"] = "v-SVR"
+df$meth[df$meth == "dwls"] = "DWLS"
+df$meth = factor(df$meth, levels = c("NNLS", "v-SVR", "DWLS", "log-normal"))
+
+
+g = ggplot(df, aes(x = hek, y = ccrf)) + 
+  geom_point(col = I("darkblue"), alpha = 0.35, size = I((abs(propdelta) / max(abs(propdelta))) * 20 + .1)) +
+  facet_wrap(~meth, nrow = 1) + 
+  theme_few() + 
+  labs(x = "Expression in HEK293T", y = "Expression in CCRF-CEM") + 
+  theme(axis.title.x = element_text(size = 13), 
+        axis.title.y = element_text(size = 13),
+        strip.text.x = element_text(size = 13), 
+        strip.text.y = element_text(size = 15), 
+        legend.position = "bottom") +
+  scale_x_continuous(trans='log10') + scale_y_continuous(trans='log10') 
+
+svg("../results/fig 2b - influence of genes when removed.svg", width = 10, height = 3.1)
+print(g)
 dev.off()
 
+svg("../results/fig 2c legend.svg", width = 10, height = 1.25)
+par(mar = c(0,0,0,0))
+plot(c(0,0), xlim = c(0, 1), ylim = c(0.2,1), xaxt = "n", yaxt = "n", xlab = "", ylab = "", col = 0, bty = "n")
+points(.1 + seq(.2, .8, length.out = 5), rep(.8, 5),
+       cex = seq(0, 1, length.out = 5) * 7 + .3,
+       pch = 16, col = alpha("darkblue", 0.35))
+points(.1 + seq(.2, .8, length.out = 5), rep(.8, 5),
+       cex = seq(0, 1, length.out = 5) * 7 + .3,
+       pch = 1, col = alpha("darkblue", 0.45))
+text(.1 + seq(.2, .8, length.out = 5), rep(.55, 5), 
+     labels = seq(0, signif(max(abs(propdeltas)), 0.2), length.out = 5))
+#text(.5, .1, labels = "Change in estimated cell proportion when removed", cex = 1.3)
+text(.1, .65, labels = "Change in estimated\ncell proportion\nwhen removed", cex = 1)
+dev.off()
+
+
+
+
+
+
+# how does influence vary with 
+par(mfrow = c(1, length(lres)))
+for (mname in colnames(propdeltas)) {
+  plot(abs(propdeltas[-1, mname]) ~ y.loo[, 1], log = "xy", ylim = c(1e-9, max(abs(propdeltas))), main = mname,
+       xlab = "Expression level", ylab = "Change in estimated proportion when gene is removed", cex.lab = 1.5)
+}
+for (mname in colnames(propdeltas)) {
+  plot(abs(propdeltas[-1, mname]) ~ y.loo[, 1], log = "x", ylim = c(1e-9, max(abs(propdeltas))), main = mname,
+       xlab = "Expression level", ylab = "Change in estimated proportion when gene is removed", cex.lab = 1.5)
+}
 
