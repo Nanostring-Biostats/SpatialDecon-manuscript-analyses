@@ -1,0 +1,841 @@
+"","method","tissue","protein","stat","value","tumor"
+"1","DWLS","L09","CD3 protein
+vs. total T-cells","cors",0.421909519075558,"Tumor 1"
+"2","DWLS","L09","CD8 protein
+vs. CD8 T-cells","cors",-0.023506471498059,"Tumor 1"
+"3","DWLS","L09","CD68 protein
+vs. macrophages","cors",0.863041232888871,"Tumor 1"
+"4","DWLS","L09","CD66b protein
+vs. neutrophils","cors",0.846020784587759,"Tumor 1"
+"5","DWLS","L09","CD20 protein
+vs. B-cells","cors",0.91677256603188,"Tumor 1"
+"6","DWLS","L09","SMA protein
+vs. fibroblasts","cors",0.34932161003216,"Tumor 1"
+"7","DWLS","L10","CD3 protein
+vs. total T-cells","cors",0.211335258753151,"Tumor 2"
+"8","DWLS","L10","CD8 protein
+vs. CD8 T-cells","cors",-0.102187036315328,"Tumor 2"
+"9","DWLS","L10","CD68 protein
+vs. macrophages","cors",0.500327418743427,"Tumor 2"
+"10","DWLS","L10","CD66b protein
+vs. neutrophils","cors",0.0570467776009048,"Tumor 2"
+"11","DWLS","L10","CD20 protein
+vs. B-cells","cors",0.634131150457929,"Tumor 2"
+"12","DWLS","L10","SMA protein
+vs. fibroblasts","cors",0.71295729932977,"Tumor 2"
+"13","DWLS","L11","CD3 protein
+vs. total T-cells","cors",0.919279703664074,"Tumor 3"
+"14","DWLS","L11","CD8 protein
+vs. CD8 T-cells","cors",0.824959527231579,"Tumor 3"
+"15","DWLS","L11","CD68 protein
+vs. macrophages","cors",0.881292764742637,"Tumor 3"
+"16","DWLS","L11","CD66b protein
+vs. neutrophils","cors",-0.0946861419021232,"Tumor 3"
+"17","DWLS","L11","CD20 protein
+vs. B-cells","cors",0.872136452202303,"Tumor 3"
+"18","DWLS","L11","SMA protein
+vs. fibroblasts","cors",0.62317386330229,"Tumor 3"
+"19","DWLS","L12","CD3 protein
+vs. total T-cells","cors",0.873174994615145,"Tumor 4"
+"20","DWLS","L12","CD8 protein
+vs. CD8 T-cells","cors",0.283318882604935,"Tumor 4"
+"21","DWLS","L12","CD68 protein
+vs. macrophages","cors",0.91600222422878,"Tumor 4"
+"22","DWLS","L12","CD66b protein
+vs. neutrophils","cors",0.205026221785419,"Tumor 4"
+"23","DWLS","L12","CD20 protein
+vs. B-cells","cors",0.908084616144305,"Tumor 4"
+"24","DWLS","L12","SMA protein
+vs. fibroblasts","cors",0.890095724388002,"Tumor 4"
+"25","DWLS","L13","CD3 protein
+vs. total T-cells","cors",0.880886323130795,"Tumor 5"
+"26","DWLS","L13","CD8 protein
+vs. CD8 T-cells","cors",0.882173442681545,"Tumor 5"
+"27","DWLS","L13","CD68 protein
+vs. macrophages","cors",0.67900965583199,"Tumor 5"
+"28","DWLS","L13","CD66b protein
+vs. neutrophils","cors",0.362333365757781,"Tumor 5"
+"29","DWLS","L13","CD20 protein
+vs. B-cells","cors",-0.0568153247553372,"Tumor 5"
+"30","DWLS","L13","SMA protein
+vs. fibroblasts","cors",0.858172477685838,"Tumor 5"
+"31","NNLS","L09","CD3 protein
+vs. total T-cells","cors",0.832411261336539,"Tumor 1"
+"32","NNLS","L09","CD8 protein
+vs. CD8 T-cells","cors",0.249576612217325,"Tumor 1"
+"33","NNLS","L09","CD68 protein
+vs. macrophages","cors",0.758709642747173,"Tumor 1"
+"34","NNLS","L09","CD66b protein
+vs. neutrophils","cors",0.0145092927005143,"Tumor 1"
+"35","NNLS","L09","CD20 protein
+vs. B-cells","cors",0.926618854128638,"Tumor 1"
+"36","NNLS","L09","SMA protein
+vs. fibroblasts","cors",0.605190635902271,"Tumor 1"
+"37","NNLS","L10","CD3 protein
+vs. total T-cells","cors",0.705466617097917,"Tumor 2"
+"38","NNLS","L10","CD8 protein
+vs. CD8 T-cells","cors",-0.136832720159491,"Tumor 2"
+"39","NNLS","L10","CD68 protein
+vs. macrophages","cors",0.484510137884838,"Tumor 2"
+"40","NNLS","L10","CD66b protein
+vs. neutrophils","cors",-0.151630161400842,"Tumor 2"
+"41","NNLS","L10","CD20 protein
+vs. B-cells","cors",0.594940991811042,"Tumor 2"
+"42","NNLS","L10","SMA protein
+vs. fibroblasts","cors",0.870087056348544,"Tumor 2"
+"43","NNLS","L11","CD3 protein
+vs. total T-cells","cors",0.861920643162426,"Tumor 3"
+"44","NNLS","L11","CD8 protein
+vs. CD8 T-cells","cors",0.41480055096539,"Tumor 3"
+"45","NNLS","L11","CD68 protein
+vs. macrophages","cors",0.810759116566406,"Tumor 3"
+"46","NNLS","L11","CD66b protein
+vs. neutrophils","cors",-0.44917755728682,"Tumor 3"
+"47","NNLS","L11","CD20 protein
+vs. B-cells","cors",0.280173877381142,"Tumor 3"
+"48","NNLS","L11","SMA protein
+vs. fibroblasts","cors",0.405218949648085,"Tumor 3"
+"49","NNLS","L12","CD3 protein
+vs. total T-cells","cors",0.94486619260359,"Tumor 4"
+"50","NNLS","L12","CD8 protein
+vs. CD8 T-cells","cors",0.350427717814255,"Tumor 4"
+"51","NNLS","L12","CD68 protein
+vs. macrophages","cors",0.90279167201939,"Tumor 4"
+"52","NNLS","L12","CD66b protein
+vs. neutrophils","cors",0.441608127234672,"Tumor 4"
+"53","NNLS","L12","CD20 protein
+vs. B-cells","cors",0.914642764729477,"Tumor 4"
+"54","NNLS","L12","SMA protein
+vs. fibroblasts","cors",0.929880744005988,"Tumor 4"
+"55","NNLS","L13","CD3 protein
+vs. total T-cells","cors",0.730156098925504,"Tumor 5"
+"56","NNLS","L13","CD8 protein
+vs. CD8 T-cells","cors",0.631515060908665,"Tumor 5"
+"57","NNLS","L13","CD68 protein
+vs. macrophages","cors",0.784328495347103,"Tumor 5"
+"58","NNLS","L13","CD66b protein
+vs. neutrophils","cors",0.390867695742755,"Tumor 5"
+"59","NNLS","L13","CD20 protein
+vs. B-cells","cors",-0.176044279540327,"Tumor 5"
+"60","NNLS","L13","SMA protein
+vs. fibroblasts","cors",0.91268995447437,"Tumor 5"
+"61","v-SVR","L09","CD3 protein
+vs. total T-cells","cors",0.908352026308017,"Tumor 1"
+"62","v-SVR","L09","CD8 protein
+vs. CD8 T-cells","cors",0.793256778918622,"Tumor 1"
+"63","v-SVR","L09","CD68 protein
+vs. macrophages","cors",0.861871069815153,"Tumor 1"
+"64","v-SVR","L09","CD66b protein
+vs. neutrophils","cors",0.356568815640606,"Tumor 1"
+"65","v-SVR","L09","CD20 protein
+vs. B-cells","cors",0.980611019638661,"Tumor 1"
+"66","v-SVR","L09","SMA protein
+vs. fibroblasts","cors",0.627640863697093,"Tumor 1"
+"67","v-SVR","L10","CD3 protein
+vs. total T-cells","cors",0.896138306676272,"Tumor 2"
+"68","v-SVR","L10","CD8 protein
+vs. CD8 T-cells","cors",0.675105796635677,"Tumor 2"
+"69","v-SVR","L10","CD68 protein
+vs. macrophages","cors",0.463002997305142,"Tumor 2"
+"70","v-SVR","L10","CD66b protein
+vs. neutrophils","cors",-0.0209105369725835,"Tumor 2"
+"71","v-SVR","L10","CD20 protein
+vs. B-cells","cors",0.894213262269422,"Tumor 2"
+"72","v-SVR","L10","SMA protein
+vs. fibroblasts","cors",0.74675764947398,"Tumor 2"
+"73","v-SVR","L11","CD3 protein
+vs. total T-cells","cors",0.887496875984125,"Tumor 3"
+"74","v-SVR","L11","CD8 protein
+vs. CD8 T-cells","cors",0.799489349047807,"Tumor 3"
+"75","v-SVR","L11","CD68 protein
+vs. macrophages","cors",0.798003226733543,"Tumor 3"
+"76","v-SVR","L11","CD66b protein
+vs. neutrophils","cors",-0.445904767779507,"Tumor 3"
+"77","v-SVR","L11","CD20 protein
+vs. B-cells","cors",0.892365721080907,"Tumor 3"
+"78","v-SVR","L11","SMA protein
+vs. fibroblasts","cors",0.501866753398561,"Tumor 3"
+"79","v-SVR","L12","CD3 protein
+vs. total T-cells","cors",0.966439783093994,"Tumor 4"
+"80","v-SVR","L12","CD8 protein
+vs. CD8 T-cells","cors",0.82237867598785,"Tumor 4"
+"81","v-SVR","L12","CD68 protein
+vs. macrophages","cors",0.939534691885922,"Tumor 4"
+"82","v-SVR","L12","CD66b protein
+vs. neutrophils","cors",0.640018191885077,"Tumor 4"
+"83","v-SVR","L12","CD20 protein
+vs. B-cells","cors",0.956826830200763,"Tumor 4"
+"84","v-SVR","L12","SMA protein
+vs. fibroblasts","cors",0.928271907304038,"Tumor 4"
+"85","v-SVR","L13","CD3 protein
+vs. total T-cells","cors",0.894139936538554,"Tumor 5"
+"86","v-SVR","L13","CD8 protein
+vs. CD8 T-cells","cors",0.834667015426707,"Tumor 5"
+"87","v-SVR","L13","CD68 protein
+vs. macrophages","cors",0.761348585962058,"Tumor 5"
+"88","v-SVR","L13","CD66b protein
+vs. neutrophils","cors",0.316046552017707,"Tumor 5"
+"89","v-SVR","L13","CD20 protein
+vs. B-cells","cors",0.160615924880876,"Tumor 5"
+"90","v-SVR","L13","SMA protein
+vs. fibroblasts","cors",0.845774759714853,"Tumor 5"
+"91","SpatialDecon ignoring tumor","L09","CD3 protein
+vs. total T-cells","cors",0.90022995490763,"Tumor 1"
+"92","SpatialDecon ignoring tumor","L09","CD8 protein
+vs. CD8 T-cells","cors",0.665258733998015,"Tumor 1"
+"93","SpatialDecon ignoring tumor","L09","CD68 protein
+vs. macrophages","cors",0.687629339400514,"Tumor 1"
+"94","SpatialDecon ignoring tumor","L09","CD66b protein
+vs. neutrophils","cors",0.510862950160816,"Tumor 1"
+"95","SpatialDecon ignoring tumor","L09","CD20 protein
+vs. B-cells","cors",0.969161119232833,"Tumor 1"
+"96","SpatialDecon ignoring tumor","L09","SMA protein
+vs. fibroblasts","cors",0.640195664826211,"Tumor 1"
+"97","SpatialDecon ignoring tumor","L10","CD3 protein
+vs. total T-cells","cors",0.87846538397577,"Tumor 2"
+"98","SpatialDecon ignoring tumor","L10","CD8 protein
+vs. CD8 T-cells","cors",0.610621903651345,"Tumor 2"
+"99","SpatialDecon ignoring tumor","L10","CD68 protein
+vs. macrophages","cors",0.485676305495516,"Tumor 2"
+"100","SpatialDecon ignoring tumor","L10","CD66b protein
+vs. neutrophils","cors",0.036790112331303,"Tumor 2"
+"101","SpatialDecon ignoring tumor","L10","CD20 protein
+vs. B-cells","cors",0.913489629444433,"Tumor 2"
+"102","SpatialDecon ignoring tumor","L10","SMA protein
+vs. fibroblasts","cors",0.832899464940514,"Tumor 2"
+"103","SpatialDecon ignoring tumor","L11","CD3 protein
+vs. total T-cells","cors",0.854770261144752,"Tumor 3"
+"104","SpatialDecon ignoring tumor","L11","CD8 protein
+vs. CD8 T-cells","cors",0.738203127534568,"Tumor 3"
+"105","SpatialDecon ignoring tumor","L11","CD68 protein
+vs. macrophages","cors",0.774209876890498,"Tumor 3"
+"106","SpatialDecon ignoring tumor","L11","CD66b protein
+vs. neutrophils","cors",-0.418368977625993,"Tumor 3"
+"107","SpatialDecon ignoring tumor","L11","CD20 protein
+vs. B-cells","cors",0.924748883188811,"Tumor 3"
+"108","SpatialDecon ignoring tumor","L11","SMA protein
+vs. fibroblasts","cors",0.516229344670122,"Tumor 3"
+"109","SpatialDecon ignoring tumor","L12","CD3 protein
+vs. total T-cells","cors",0.970898576453027,"Tumor 4"
+"110","SpatialDecon ignoring tumor","L12","CD8 protein
+vs. CD8 T-cells","cors",0.781115822377906,"Tumor 4"
+"111","SpatialDecon ignoring tumor","L12","CD68 protein
+vs. macrophages","cors",0.876318998805067,"Tumor 4"
+"112","SpatialDecon ignoring tumor","L12","CD66b protein
+vs. neutrophils","cors",0.467792690311698,"Tumor 4"
+"113","SpatialDecon ignoring tumor","L12","CD20 protein
+vs. B-cells","cors",0.965569179419085,"Tumor 4"
+"114","SpatialDecon ignoring tumor","L12","SMA protein
+vs. fibroblasts","cors",0.908917233353143,"Tumor 4"
+"115","SpatialDecon ignoring tumor","L13","CD3 protein
+vs. total T-cells","cors",0.933082478467303,"Tumor 5"
+"116","SpatialDecon ignoring tumor","L13","CD8 protein
+vs. CD8 T-cells","cors",0.859420551462699,"Tumor 5"
+"117","SpatialDecon ignoring tumor","L13","CD68 protein
+vs. macrophages","cors",0.735935086950654,"Tumor 5"
+"118","SpatialDecon ignoring tumor","L13","CD66b protein
+vs. neutrophils","cors",0.334683736765016,"Tumor 5"
+"119","SpatialDecon ignoring tumor","L13","CD20 protein
+vs. B-cells","cors",0.345985079633801,"Tumor 5"
+"120","SpatialDecon ignoring tumor","L13","SMA protein
+vs. fibroblasts","cors",0.870746955508922,"Tumor 5"
+"121","SpatialDecon modelling tumor","L09","CD3 protein
+vs. total T-cells","cors",0.94172590638275,"Tumor 1"
+"122","SpatialDecon modelling tumor","L09","CD8 protein
+vs. CD8 T-cells","cors",0.909447775208621,"Tumor 1"
+"123","SpatialDecon modelling tumor","L09","CD68 protein
+vs. macrophages","cors",0.692147649183588,"Tumor 1"
+"124","SpatialDecon modelling tumor","L09","CD66b protein
+vs. neutrophils","cors",0.85791228726962,"Tumor 1"
+"125","SpatialDecon modelling tumor","L09","CD20 protein
+vs. B-cells","cors",0.913582901599484,"Tumor 1"
+"126","SpatialDecon modelling tumor","L09","SMA protein
+vs. fibroblasts","cors",0.674458820902244,"Tumor 1"
+"127","SpatialDecon modelling tumor","L10","CD3 protein
+vs. total T-cells","cors",0.922480872588173,"Tumor 2"
+"128","SpatialDecon modelling tumor","L10","CD8 protein
+vs. CD8 T-cells","cors",0.71259983684687,"Tumor 2"
+"129","SpatialDecon modelling tumor","L10","CD68 protein
+vs. macrophages","cors",0.422512273707604,"Tumor 2"
+"130","SpatialDecon modelling tumor","L10","CD66b protein
+vs. neutrophils","cors",0.349269081788649,"Tumor 2"
+"131","SpatialDecon modelling tumor","L10","CD20 protein
+vs. B-cells","cors",0.880056628448688,"Tumor 2"
+"132","SpatialDecon modelling tumor","L10","SMA protein
+vs. fibroblasts","cors",0.853949934450089,"Tumor 2"
+"133","SpatialDecon modelling tumor","L11","CD3 protein
+vs. total T-cells","cors",0.874384955219914,"Tumor 3"
+"134","SpatialDecon modelling tumor","L11","CD8 protein
+vs. CD8 T-cells","cors",0.856939938694158,"Tumor 3"
+"135","SpatialDecon modelling tumor","L11","CD68 protein
+vs. macrophages","cors",0.788400807877889,"Tumor 3"
+"136","SpatialDecon modelling tumor","L11","CD66b protein
+vs. neutrophils","cors",-0.0840636704474648,"Tumor 3"
+"137","SpatialDecon modelling tumor","L11","CD20 protein
+vs. B-cells","cors",0.857320691421081,"Tumor 3"
+"138","SpatialDecon modelling tumor","L11","SMA protein
+vs. fibroblasts","cors",0.645712264158625,"Tumor 3"
+"139","SpatialDecon modelling tumor","L12","CD3 protein
+vs. total T-cells","cors",0.982291251691253,"Tumor 4"
+"140","SpatialDecon modelling tumor","L12","CD8 protein
+vs. CD8 T-cells","cors",0.878450393282426,"Tumor 4"
+"141","SpatialDecon modelling tumor","L12","CD68 protein
+vs. macrophages","cors",0.931229109093063,"Tumor 4"
+"142","SpatialDecon modelling tumor","L12","CD66b protein
+vs. neutrophils","cors",0.839312120298065,"Tumor 4"
+"143","SpatialDecon modelling tumor","L12","CD20 protein
+vs. B-cells","cors",0.923573328664614,"Tumor 4"
+"144","SpatialDecon modelling tumor","L12","SMA protein
+vs. fibroblasts","cors",0.935821987800724,"Tumor 4"
+"145","SpatialDecon modelling tumor","L13","CD3 protein
+vs. total T-cells","cors",0.949078730956261,"Tumor 5"
+"146","SpatialDecon modelling tumor","L13","CD8 protein
+vs. CD8 T-cells","cors",0.840814901048992,"Tumor 5"
+"147","SpatialDecon modelling tumor","L13","CD68 protein
+vs. macrophages","cors",0.747642125671337,"Tumor 5"
+"148","SpatialDecon modelling tumor","L13","CD66b protein
+vs. neutrophils","cors",0.188545230286827,"Tumor 5"
+"149","SpatialDecon modelling tumor","L13","CD20 protein
+vs. B-cells","cors",0.401102534898629,"Tumor 5"
+"150","SpatialDecon modelling tumor","L13","SMA protein
+vs. fibroblasts","cors",0.888784272042413,"Tumor 5"
+"151","Stereoscope + safeTME","L09","CD3 protein
+vs. total T-cells","cors",0.662882442786483,"Tumor 1"
+"152","Stereoscope + safeTME","L09","CD8 protein
+vs. CD8 T-cells","cors",0.182746826691349,"Tumor 1"
+"153","Stereoscope + safeTME","L09","CD68 protein
+vs. macrophages","cors",0.849338579214365,"Tumor 1"
+"154","Stereoscope + safeTME","L09","CD66b protein
+vs. neutrophils","cors",0.543627171473133,"Tumor 1"
+"155","Stereoscope + safeTME","L09","CD20 protein
+vs. B-cells","cors",0.939806050740411,"Tumor 1"
+"156","Stereoscope + safeTME","L09","SMA protein
+vs. fibroblasts","cors",0.580263665460173,"Tumor 1"
+"157","Stereoscope + safeTME","L10","CD3 protein
+vs. total T-cells","cors",0.754817613884233,"Tumor 2"
+"158","Stereoscope + safeTME","L10","CD8 protein
+vs. CD8 T-cells","cors",0.574585803641504,"Tumor 2"
+"159","Stereoscope + safeTME","L10","CD68 protein
+vs. macrophages","cors",0.705044614229978,"Tumor 2"
+"160","Stereoscope + safeTME","L10","CD66b protein
+vs. neutrophils","cors",0.120644110339287,"Tumor 2"
+"161","Stereoscope + safeTME","L10","CD20 protein
+vs. B-cells","cors",0.817799851667078,"Tumor 2"
+"162","Stereoscope + safeTME","L10","SMA protein
+vs. fibroblasts","cors",0.810312489861692,"Tumor 2"
+"163","Stereoscope + safeTME","L11","CD3 protein
+vs. total T-cells","cors",0.945012854608215,"Tumor 3"
+"164","Stereoscope + safeTME","L11","CD8 protein
+vs. CD8 T-cells","cors",0.880960769254124,"Tumor 3"
+"165","Stereoscope + safeTME","L11","CD68 protein
+vs. macrophages","cors",0.894976343756142,"Tumor 3"
+"166","Stereoscope + safeTME","L11","CD66b protein
+vs. neutrophils","cors",-0.534910332088388,"Tumor 3"
+"167","Stereoscope + safeTME","L11","CD20 protein
+vs. B-cells","cors",0.94913022274087,"Tumor 3"
+"168","Stereoscope + safeTME","L11","SMA protein
+vs. fibroblasts","cors",0.391016876553126,"Tumor 3"
+"169","Stereoscope + safeTME","L12","CD3 protein
+vs. total T-cells","cors",0.886635947136869,"Tumor 4"
+"170","Stereoscope + safeTME","L12","CD8 protein
+vs. CD8 T-cells","cors",0.661504089895273,"Tumor 4"
+"171","Stereoscope + safeTME","L12","CD68 protein
+vs. macrophages","cors",0.863797865170944,"Tumor 4"
+"172","Stereoscope + safeTME","L12","CD66b protein
+vs. neutrophils","cors",0.369904787471639,"Tumor 4"
+"173","Stereoscope + safeTME","L12","CD20 protein
+vs. B-cells","cors",0.948922113767376,"Tumor 4"
+"174","Stereoscope + safeTME","L12","SMA protein
+vs. fibroblasts","cors",0.920184704846038,"Tumor 4"
+"175","Stereoscope + safeTME","L13","CD3 protein
+vs. total T-cells","cors",0.818052510140193,"Tumor 5"
+"176","Stereoscope + safeTME","L13","CD8 protein
+vs. CD8 T-cells","cors",0.698912108482402,"Tumor 5"
+"177","Stereoscope + safeTME","L13","CD68 protein
+vs. macrophages","cors",0.687803841947554,"Tumor 5"
+"178","Stereoscope + safeTME","L13","CD66b protein
+vs. neutrophils","cors",0.0549651940267387,"Tumor 5"
+"179","Stereoscope + safeTME","L13","CD20 protein
+vs. B-cells","cors",-0.209303441748307,"Tumor 5"
+"180","Stereoscope + safeTME","L13","SMA protein
+vs. fibroblasts","cors",0.929420467696996,"Tumor 5"
+"181","Stereoscope + scRNAseq lung profiles","L09","CD3 protein
+vs. total T-cells","cors",0.477055032881582,"Tumor 1"
+"182","Stereoscope + scRNAseq lung profiles","L09","CD8 protein
+vs. CD8 T-cells","cors",NA,"Tumor 1"
+"183","Stereoscope + scRNAseq lung profiles","L09","CD68 protein
+vs. macrophages","cors",NA,"Tumor 1"
+"184","Stereoscope + scRNAseq lung profiles","L09","CD66b protein
+vs. neutrophils","cors",0.711477794188732,"Tumor 1"
+"185","Stereoscope + scRNAseq lung profiles","L09","CD20 protein
+vs. B-cells","cors",0.439355035501538,"Tumor 1"
+"186","Stereoscope + scRNAseq lung profiles","L09","SMA protein
+vs. fibroblasts","cors",0.363022845375304,"Tumor 1"
+"187","Stereoscope + scRNAseq lung profiles","L10","CD3 protein
+vs. total T-cells","cors",0.589223641059254,"Tumor 2"
+"188","Stereoscope + scRNAseq lung profiles","L10","CD8 protein
+vs. CD8 T-cells","cors",NA,"Tumor 2"
+"189","Stereoscope + scRNAseq lung profiles","L10","CD68 protein
+vs. macrophages","cors",NA,"Tumor 2"
+"190","Stereoscope + scRNAseq lung profiles","L10","CD66b protein
+vs. neutrophils","cors",0.397250594140249,"Tumor 2"
+"191","Stereoscope + scRNAseq lung profiles","L10","CD20 protein
+vs. B-cells","cors",0.513775427941168,"Tumor 2"
+"192","Stereoscope + scRNAseq lung profiles","L10","SMA protein
+vs. fibroblasts","cors",0.0967780820632478,"Tumor 2"
+"193","Stereoscope + scRNAseq lung profiles","L11","CD3 protein
+vs. total T-cells","cors",0.646075400003562,"Tumor 3"
+"194","Stereoscope + scRNAseq lung profiles","L11","CD8 protein
+vs. CD8 T-cells","cors",NA,"Tumor 3"
+"195","Stereoscope + scRNAseq lung profiles","L11","CD68 protein
+vs. macrophages","cors",NA,"Tumor 3"
+"196","Stereoscope + scRNAseq lung profiles","L11","CD66b protein
+vs. neutrophils","cors",0.257759532208065,"Tumor 3"
+"197","Stereoscope + scRNAseq lung profiles","L11","CD20 protein
+vs. B-cells","cors",-0.0508819695284069,"Tumor 3"
+"198","Stereoscope + scRNAseq lung profiles","L11","SMA protein
+vs. fibroblasts","cors",0.619729366570156,"Tumor 3"
+"199","Stereoscope + scRNAseq lung profiles","L12","CD3 protein
+vs. total T-cells","cors",0.588752625641972,"Tumor 4"
+"200","Stereoscope + scRNAseq lung profiles","L12","CD8 protein
+vs. CD8 T-cells","cors",NA,"Tumor 4"
+"201","Stereoscope + scRNAseq lung profiles","L12","CD68 protein
+vs. macrophages","cors",NA,"Tumor 4"
+"202","Stereoscope + scRNAseq lung profiles","L12","CD66b protein
+vs. neutrophils","cors",0.521978700910964,"Tumor 4"
+"203","Stereoscope + scRNAseq lung profiles","L12","CD20 protein
+vs. B-cells","cors",0.348357983019623,"Tumor 4"
+"204","Stereoscope + scRNAseq lung profiles","L12","SMA protein
+vs. fibroblasts","cors",-0.0327231428748367,"Tumor 4"
+"205","Stereoscope + scRNAseq lung profiles","L13","CD3 protein
+vs. total T-cells","cors",0.577196076735622,"Tumor 5"
+"206","Stereoscope + scRNAseq lung profiles","L13","CD8 protein
+vs. CD8 T-cells","cors",NA,"Tumor 5"
+"207","Stereoscope + scRNAseq lung profiles","L13","CD68 protein
+vs. macrophages","cors",NA,"Tumor 5"
+"208","Stereoscope + scRNAseq lung profiles","L13","CD66b protein
+vs. neutrophils","cors",0.0974189549495239,"Tumor 5"
+"209","Stereoscope + scRNAseq lung profiles","L13","CD20 protein
+vs. B-cells","cors",-0.254593703628452,"Tumor 5"
+"210","Stereoscope + scRNAseq lung profiles","L13","SMA protein
+vs. fibroblasts","cors",0.470216541718585,"Tumor 5"
+"211","DWLS","L09","CD3 protein
+vs. total T-cells","spearmans",-0.0335834896810506,"Tumor 1"
+"212","DWLS","L09","CD8 protein
+vs. CD8 T-cells","spearmans",-0.447091932457786,"Tumor 1"
+"213","DWLS","L09","CD68 protein
+vs. macrophages","spearmans",0.912007504690431,"Tumor 1"
+"214","DWLS","L09","CD66b protein
+vs. neutrophils","spearmans",0.639774859287054,"Tumor 1"
+"215","DWLS","L09","CD20 protein
+vs. B-cells","spearmans",0.10844277673546,"Tumor 1"
+"216","DWLS","L09","SMA protein
+vs. fibroblasts","spearmans",0.540337711069418,"Tumor 1"
+"217","DWLS","L10","CD3 protein
+vs. total T-cells","spearmans",0.437064446500154,"Tumor 2"
+"218","DWLS","L10","CD8 protein
+vs. CD8 T-cells","spearmans",0.137341967314215,"Tumor 2"
+"219","DWLS","L10","CD68 protein
+vs. macrophages","spearmans",0.553993216157878,"Tumor 2"
+"220","DWLS","L10","CD66b protein
+vs. neutrophils","spearmans",0.230465618254702,"Tumor 2"
+"221","DWLS","L10","CD20 protein
+vs. B-cells","spearmans",0.36145544249152,"Tumor 2"
+"222","DWLS","L10","SMA protein
+vs. fibroblasts","spearmans",0.716435399321616,"Tumor 2"
+"223","DWLS","L11","CD3 protein
+vs. total T-cells","spearmans",0.881221091581869,"Tumor 3"
+"224","DWLS","L11","CD8 protein
+vs. CD8 T-cells","spearmans",0.806105457909343,"Tumor 3"
+"225","DWLS","L11","CD68 protein
+vs. macrophages","spearmans",0.810422448350293,"Tumor 3"
+"226","DWLS","L11","CD66b protein
+vs. neutrophils","spearmans",-0.114770274437249,"Tumor 3"
+"227","DWLS","L11","CD20 protein
+vs. B-cells","spearmans",0.331359851988899,"Tumor 3"
+"228","DWLS","L11","SMA protein
+vs. fibroblasts","spearmans",0.689916743755782,"Tumor 3"
+"229","DWLS","L12","CD3 protein
+vs. total T-cells","spearmans",0.768454190186713,"Tumor 4"
+"230","DWLS","L12","CD8 protein
+vs. CD8 T-cells","spearmans",0.654255319148936,"Tumor 4"
+"231","DWLS","L12","CD68 protein
+vs. macrophages","spearmans",0.796026921406861,"Tumor 4"
+"232","DWLS","L12","CD66b protein
+vs. neutrophils","spearmans",0.275835866261398,"Tumor 4"
+"233","DWLS","L12","CD20 protein
+vs. B-cells","spearmans",0.523990447242727,"Tumor 4"
+"234","DWLS","L12","SMA protein
+vs. fibroblasts","spearmans",0.660768562744247,"Tumor 4"
+"235","DWLS","L13","CD3 protein
+vs. total T-cells","spearmans",0.834189066747206,"Tumor 5"
+"236","DWLS","L13","CD8 protein
+vs. CD8 T-cells","spearmans",0.751283600120809,"Tumor 5"
+"237","DWLS","L13","CD68 protein
+vs. macrophages","spearmans",0.710208396254908,"Tumor 5"
+"238","DWLS","L13","CD66b protein
+vs. neutrophils","spearmans",0.40531561461794,"Tumor 5"
+"239","DWLS","L13","CD20 protein
+vs. B-cells","spearmans",0.0860767139836907,"Tumor 5"
+"240","DWLS","L13","SMA protein
+vs. fibroblasts","spearmans",0.832376925400181,"Tumor 5"
+"241","NNLS","L09","CD3 protein
+vs. total T-cells","spearmans",0.39624765478424,"Tumor 1"
+"242","NNLS","L09","CD8 protein
+vs. CD8 T-cells","spearmans",-0.0915615179955634,"Tumor 1"
+"243","NNLS","L09","CD68 protein
+vs. macrophages","spearmans",0.77742858568569,"Tumor 1"
+"244","NNLS","L09","CD66b protein
+vs. neutrophils","spearmans",0.0150093808630394,"Tumor 1"
+"245","NNLS","L09","CD20 protein
+vs. B-cells","spearmans",0.436702873438096,"Tumor 1"
+"246","NNLS","L09","SMA protein
+vs. fibroblasts","spearmans",0.712382739212007,"Tumor 1"
+"247","NNLS","L10","CD3 protein
+vs. total T-cells","spearmans",0.681776133209991,"Tumor 2"
+"248","NNLS","L10","CD8 protein
+vs. CD8 T-cells","spearmans",-0.211840888066605,"Tumor 2"
+"249","NNLS","L10","CD68 protein
+vs. macrophages","spearmans",0.448055752780174,"Tumor 2"
+"250","NNLS","L10","CD66b protein
+vs. neutrophils","spearmans",-0.0146165469248315,"Tumor 2"
+"251","NNLS","L10","CD20 protein
+vs. B-cells","spearmans",0.473983755243531,"Tumor 2"
+"252","NNLS","L10","SMA protein
+vs. fibroblasts","spearmans",0.787110699969164,"Tumor 2"
+"253","NNLS","L11","CD3 protein
+vs. total T-cells","spearmans",0.771692876965772,"Tumor 3"
+"254","NNLS","L11","CD8 protein
+vs. CD8 T-cells","spearmans",0.223092581725789,"Tumor 3"
+"255","NNLS","L11","CD68 protein
+vs. macrophages","spearmans",0.780696885599753,"Tumor 3"
+"256","NNLS","L11","CD66b protein
+vs. neutrophils","spearmans",-0.419196366161542,"Tumor 3"
+"257","NNLS","L11","CD20 protein
+vs. B-cells","spearmans",0.0756313816810566,"Tumor 3"
+"258","NNLS","L11","SMA protein
+vs. fibroblasts","spearmans",0.291150169596053,"Tumor 3"
+"259","NNLS","L12","CD3 protein
+vs. total T-cells","spearmans",0.842379504993487,"Tumor 4"
+"260","NNLS","L12","CD8 protein
+vs. CD8 T-cells","spearmans",0.393896112257058,"Tumor 4"
+"261","NNLS","L12","CD68 protein
+vs. macrophages","spearmans",0.623334328668777,"Tumor 4"
+"262","NNLS","L12","CD66b protein
+vs. neutrophils","spearmans",0.484992913512187,"Tumor 4"
+"263","NNLS","L12","CD20 protein
+vs. B-cells","spearmans",0.632784401790305,"Tumor 4"
+"264","NNLS","L12","SMA protein
+vs. fibroblasts","spearmans",0.810030395136778,"Tumor 4"
+"265","NNLS","L13","CD3 protein
+vs. total T-cells","spearmans",0.627755964965267,"Tumor 5"
+"266","NNLS","L13","CD8 protein
+vs. CD8 T-cells","spearmans",0.629907747539819,"Tumor 5"
+"267","NNLS","L13","CD68 protein
+vs. macrophages","spearmans",0.701298701298701,"Tumor 5"
+"268","NNLS","L13","CD66b protein
+vs. neutrophils","spearmans",0.370798425115228,"Tumor 5"
+"269","NNLS","L13","CD20 protein
+vs. B-cells","spearmans",-0.147629549713318,"Tumor 5"
+"270","NNLS","L13","SMA protein
+vs. fibroblasts","spearmans",0.890063424947146,"Tumor 5"
+"271","v-SVR","L09","CD3 protein
+vs. total T-cells","spearmans",0.746529080675422,"Tumor 1"
+"272","v-SVR","L09","CD8 protein
+vs. CD8 T-cells","spearmans",0.324015009380863,"Tumor 1"
+"273","v-SVR","L09","CD68 protein
+vs. macrophages","spearmans",0.658348968105066,"Tumor 1"
+"274","v-SVR","L09","CD66b protein
+vs. neutrophils","spearmans",0.315438795876078,"Tumor 1"
+"275","v-SVR","L09","CD20 protein
+vs. B-cells","spearmans",0.54765478424015,"Tumor 1"
+"276","v-SVR","L09","SMA protein
+vs. fibroblasts","spearmans",0.681238273921201,"Tumor 1"
+"277","v-SVR","L10","CD3 protein
+vs. total T-cells","spearmans",0.831144002466852,"Tumor 2"
+"278","v-SVR","L10","CD8 protein
+vs. CD8 T-cells","spearmans",0.73950046253469,"Tumor 2"
+"279","v-SVR","L10","CD68 protein
+vs. macrophages","spearmans",0.34640764724021,"Tumor 2"
+"280","v-SVR","L10","CD66b protein
+vs. neutrophils","spearmans",0.239864285102963,"Tumor 2"
+"281","v-SVR","L10","CD20 protein
+vs. B-cells","spearmans",0.433734196731421,"Tumor 2"
+"282","v-SVR","L10","SMA protein
+vs. fibroblasts","spearmans",0.767869256860931,"Tumor 2"
+"283","v-SVR","L11","CD3 protein
+vs. total T-cells","spearmans",0.854085723095899,"Tumor 3"
+"284","v-SVR","L11","CD8 protein
+vs. CD8 T-cells","spearmans",0.738143694110391,"Tumor 3"
+"285","v-SVR","L11","CD68 protein
+vs. macrophages","spearmans",0.811779216774591,"Tumor 3"
+"286","v-SVR","L11","CD66b protein
+vs. neutrophils","spearmans",-0.441407264119609,"Tumor 3"
+"287","v-SVR","L11","CD20 protein
+vs. B-cells","spearmans",0.231945729263028,"Tumor 3"
+"288","v-SVR","L11","SMA protein
+vs. fibroblasts","spearmans",0.494418748072772,"Tumor 3"
+"289","v-SVR","L12","CD3 protein
+vs. total T-cells","spearmans",0.754776378636561,"Tumor 4"
+"290","v-SVR","L12","CD8 protein
+vs. CD8 T-cells","spearmans",0.662522419763228,"Tumor 4"
+"291","v-SVR","L12","CD68 protein
+vs. macrophages","spearmans",0.785280069474598,"Tumor 4"
+"292","v-SVR","L12","CD66b protein
+vs. neutrophils","spearmans",0.520233908127919,"Tumor 4"
+"293","v-SVR","L12","CD20 protein
+vs. B-cells","spearmans",0.674772036474164,"Tumor 4"
+"294","v-SVR","L12","SMA protein
+vs. fibroblasts","spearmans",0.79950065132436,"Tumor 4"
+"295","v-SVR","L13","CD3 protein
+vs. total T-cells","spearmans",0.856236786469345,"Tumor 5"
+"296","v-SVR","L13","CD8 protein
+vs. CD8 T-cells","spearmans",0.825430383569918,"Tumor 5"
+"297","v-SVR","L13","CD68 protein
+vs. macrophages","spearmans",0.689519782543038,"Tumor 5"
+"298","v-SVR","L13","CD66b protein
+vs. neutrophils","spearmans",0.286774251363913,"Tumor 5"
+"299","v-SVR","L13","CD20 protein
+vs. B-cells","spearmans",0.0492298399275143,"Tumor 5"
+"300","v-SVR","L13","SMA protein
+vs. fibroblasts","spearmans",0.839172455451525,"Tumor 5"
+"301","SpatialDecon ignoring tumor","L09","CD3 protein
+vs. total T-cells","spearmans",0.372983114446529,"Tumor 1"
+"302","SpatialDecon ignoring tumor","L09","CD8 protein
+vs. CD8 T-cells","spearmans",0.118011257035647,"Tumor 1"
+"303","SpatialDecon ignoring tumor","L09","CD68 protein
+vs. macrophages","spearmans",0.660225140712945,"Tumor 1"
+"304","SpatialDecon ignoring tumor","L09","CD66b protein
+vs. neutrophils","spearmans",0.369793621013133,"Tumor 1"
+"305","SpatialDecon ignoring tumor","L09","CD20 protein
+vs. B-cells","spearmans",0.387242026266416,"Tumor 1"
+"306","SpatialDecon ignoring tumor","L09","SMA protein
+vs. fibroblasts","spearmans",0.766791744840525,"Tumor 1"
+"307","SpatialDecon ignoring tumor","L10","CD3 protein
+vs. total T-cells","spearmans",0.801788467468393,"Tumor 2"
+"308","SpatialDecon ignoring tumor","L10","CD8 protein
+vs. CD8 T-cells","spearmans",0.623188405797101,"Tumor 2"
+"309","SpatialDecon ignoring tumor","L10","CD68 protein
+vs. macrophages","spearmans",0.378353376503238,"Tumor 2"
+"310","SpatialDecon ignoring tumor","L10","CD66b protein
+vs. neutrophils","spearmans",0.17027443724946,"Tumor 2"
+"311","SpatialDecon ignoring tumor","L10","CD20 protein
+vs. B-cells","spearmans",0.558310206598828,"Tumor 2"
+"312","SpatialDecon ignoring tumor","L10","SMA protein
+vs. fibroblasts","spearmans",0.765279062596361,"Tumor 2"
+"313","SpatialDecon ignoring tumor","L11","CD3 protein
+vs. total T-cells","spearmans",0.919087264878199,"Tumor 3"
+"314","SpatialDecon ignoring tumor","L11","CD8 protein
+vs. CD8 T-cells","spearmans",0.679185938945421,"Tumor 3"
+"315","SpatialDecon ignoring tumor","L11","CD68 protein
+vs. macrophages","spearmans",0.799691643539932,"Tumor 3"
+"316","SpatialDecon ignoring tumor","L11","CD66b protein
+vs. neutrophils","spearmans",-0.352574776441566,"Tumor 3"
+"317","SpatialDecon ignoring tumor","L11","CD20 protein
+vs. B-cells","spearmans",0.336786925686093,"Tumor 3"
+"318","SpatialDecon ignoring tumor","L11","SMA protein
+vs. fibroblasts","spearmans",0.493308664816528,"Tumor 3"
+"319","SpatialDecon ignoring tumor","L12","CD3 protein
+vs. total T-cells","spearmans",0.905015197568389,"Tumor 4"
+"320","SpatialDecon ignoring tumor","L12","CD8 protein
+vs. CD8 T-cells","spearmans",0.780937907077725,"Tumor 4"
+"321","SpatialDecon ignoring tumor","L12","CD68 protein
+vs. macrophages","spearmans",0.698871037776813,"Tumor 4"
+"322","SpatialDecon ignoring tumor","L12","CD66b protein
+vs. neutrophils","spearmans",0.0831524099001303,"Tumor 4"
+"323","SpatialDecon ignoring tumor","L12","CD20 protein
+vs. B-cells","spearmans",0.680525401650022,"Tumor 4"
+"324","SpatialDecon ignoring tumor","L12","SMA protein
+vs. fibroblasts","spearmans",0.914025184541902,"Tumor 4"
+"325","SpatialDecon ignoring tumor","L13","CD3 protein
+vs. total T-cells","spearmans",0.854273633343401,"Tumor 5"
+"326","SpatialDecon ignoring tumor","L13","CD8 protein
+vs. CD8 T-cells","spearmans",0.811839323467231,"Tumor 5"
+"327","SpatialDecon ignoring tumor","L13","CD68 protein
+vs. macrophages","spearmans",0.691029900332226,"Tumor 5"
+"328","SpatialDecon ignoring tumor","L13","CD66b protein
+vs. neutrophils","spearmans",0.380851706433102,"Tumor 5"
+"329","SpatialDecon ignoring tumor","L13","CD20 protein
+vs. B-cells","spearmans",0.272123225611598,"Tumor 5"
+"330","SpatialDecon ignoring tumor","L13","SMA protein
+vs. fibroblasts","spearmans",0.837209302325581,"Tumor 5"
+"331","SpatialDecon modelling tumor","L09","CD3 protein
+vs. total T-cells","spearmans",0.299366155255168,"Tumor 1"
+"332","SpatialDecon modelling tumor","L09","CD8 protein
+vs. CD8 T-cells","spearmans",0.106166908445487,"Tumor 1"
+"333","SpatialDecon modelling tumor","L09","CD68 protein
+vs. macrophages","spearmans",0.629243612618114,"Tumor 1"
+"334","SpatialDecon modelling tumor","L09","CD66b protein
+vs. neutrophils","spearmans",0.738396680944274,"Tumor 1"
+"335","SpatialDecon modelling tumor","L09","CD20 protein
+vs. B-cells","spearmans",0.287343671146626,"Tumor 1"
+"336","SpatialDecon modelling tumor","L09","SMA protein
+vs. fibroblasts","spearmans",0.668466934220814,"Tumor 1"
+"337","SpatialDecon modelling tumor","L10","CD3 protein
+vs. total T-cells","spearmans",0.899179698240494,"Tumor 2"
+"338","SpatialDecon modelling tumor","L10","CD8 protein
+vs. CD8 T-cells","spearmans",0.782260929542385,"Tumor 2"
+"339","SpatialDecon modelling tumor","L10","CD68 protein
+vs. macrophages","spearmans",0.313561299287541,"Tumor 2"
+"340","SpatialDecon modelling tumor","L10","CD66b protein
+vs. neutrophils","spearmans",0.589151220081543,"Tumor 2"
+"341","SpatialDecon modelling tumor","L10","CD20 protein
+vs. B-cells","spearmans",0.513749887076897,"Tumor 2"
+"342","SpatialDecon modelling tumor","L10","SMA protein
+vs. fibroblasts","spearmans",0.837450900981211,"Tumor 2"
+"343","SpatialDecon modelling tumor","L11","CD3 protein
+vs. total T-cells","spearmans",0.925597102402031,"Tumor 3"
+"344","SpatialDecon modelling tumor","L11","CD8 protein
+vs. CD8 T-cells","spearmans",0.84870434682553,"Tumor 3"
+"345","SpatialDecon modelling tumor","L11","CD68 protein
+vs. macrophages","spearmans",0.808835303614727,"Tumor 3"
+"346","SpatialDecon modelling tumor","L11","CD66b protein
+vs. neutrophils","spearmans",-0.0719717752855968,"Tumor 3"
+"347","SpatialDecon modelling tumor","L11","CD20 protein
+vs. B-cells","spearmans",0.418843914246541,"Tumor 3"
+"348","SpatialDecon modelling tumor","L11","SMA protein
+vs. fibroblasts","spearmans",0.708896170984928,"Tumor 3"
+"349","SpatialDecon modelling tumor","L12","CD3 protein
+vs. total T-cells","spearmans",0.896827762198925,"Tumor 4"
+"350","SpatialDecon modelling tumor","L12","CD8 protein
+vs. CD8 T-cells","spearmans",0.799812356480624,"Tumor 4"
+"351","SpatialDecon modelling tumor","L12","CD68 protein
+vs. macrophages","spearmans",0.566564842676553,"Tumor 4"
+"352","SpatialDecon modelling tumor","L12","CD66b protein
+vs. neutrophils","spearmans",0.533178088231381,"Tumor 4"
+"353","SpatialDecon modelling tumor","L12","CD20 protein
+vs. B-cells","spearmans",0.626206400211399,"Tumor 4"
+"354","SpatialDecon modelling tumor","L12","SMA protein
+vs. fibroblasts","spearmans",0.798088181457679,"Tumor 4"
+"355","SpatialDecon modelling tumor","L13","CD3 protein
+vs. total T-cells","spearmans",0.860294103140956,"Tumor 5"
+"356","SpatialDecon modelling tumor","L13","CD8 protein
+vs. CD8 T-cells","spearmans",0.748465416213471,"Tumor 5"
+"357","SpatialDecon modelling tumor","L13","CD68 protein
+vs. macrophages","spearmans",0.683652664946162,"Tumor 5"
+"358","SpatialDecon modelling tumor","L13","CD66b protein
+vs. neutrophils","spearmans",0.234945341903196,"Tumor 5"
+"359","SpatialDecon modelling tumor","L13","CD20 protein
+vs. B-cells","spearmans",0.256953439033657,"Tumor 5"
+"360","SpatialDecon modelling tumor","L13","SMA protein
+vs. fibroblasts","spearmans",0.888000385363857,"Tumor 5"
+"361","Stereoscope + safeTME","L09","CD3 protein
+vs. total T-cells","spearmans",0.0870544090056285,"Tumor 1"
+"362","Stereoscope + safeTME","L09","CD8 protein
+vs. CD8 T-cells","spearmans",-0.359474671669794,"Tumor 1"
+"363","Stereoscope + safeTME","L09","CD68 protein
+vs. macrophages","spearmans",0.874108818011257,"Tumor 1"
+"364","Stereoscope + safeTME","L09","CD66b protein
+vs. neutrophils","spearmans",0.450844277673546,"Tumor 1"
+"365","Stereoscope + safeTME","L09","CD20 protein
+vs. B-cells","spearmans",0.256285178236398,"Tumor 1"
+"366","Stereoscope + safeTME","L09","SMA protein
+vs. fibroblasts","spearmans",0.460037523452158,"Tumor 1"
+"367","Stereoscope + safeTME","L10","CD3 protein
+vs. total T-cells","spearmans",0.737403638606229,"Tumor 2"
+"368","Stereoscope + safeTME","L10","CD8 protein
+vs. CD8 T-cells","spearmans",0.588529139685476,"Tumor 2"
+"369","Stereoscope + safeTME","L10","CD68 protein
+vs. macrophages","spearmans",0.639469626888683,"Tumor 2"
+"370","Stereoscope + safeTME","L10","CD66b protein
+vs. neutrophils","spearmans",0.28695652173913,"Tumor 2"
+"371","Stereoscope + safeTME","L10","CD20 protein
+vs. B-cells","spearmans",0.433734196731421,"Tumor 2"
+"372","Stereoscope + safeTME","L10","SMA protein
+vs. fibroblasts","spearmans",0.796484736355227,"Tumor 2"
+"373","Stereoscope + safeTME","L11","CD3 protein
+vs. total T-cells","spearmans",0.838421214924453,"Tumor 3"
+"374","Stereoscope + safeTME","L11","CD8 protein
+vs. CD8 T-cells","spearmans",0.775269811902559,"Tumor 3"
+"375","Stereoscope + safeTME","L11","CD68 protein
+vs. macrophages","spearmans",0.804378661732963,"Tumor 3"
+"376","Stereoscope + safeTME","L11","CD66b protein
+vs. neutrophils","spearmans",-0.490718470551958,"Tumor 3"
+"377","Stereoscope + safeTME","L11","CD20 protein
+vs. B-cells","spearmans",0.379463459759482,"Tumor 3"
+"378","Stereoscope + safeTME","L11","SMA protein
+vs. fibroblasts","spearmans",0.114646931853222,"Tumor 3"
+"379","Stereoscope + safeTME","L12","CD3 protein
+vs. total T-cells","spearmans",0.804711246200608,"Tumor 4"
+"380","Stereoscope + safeTME","L12","CD8 protein
+vs. CD8 T-cells","spearmans",0.684324793747286,"Tumor 4"
+"381","Stereoscope + safeTME","L12","CD68 protein
+vs. macrophages","spearmans",0.777247069040382,"Tumor 4"
+"382","Stereoscope + safeTME","L12","CD66b protein
+vs. neutrophils","spearmans",0.266283108988276,"Tumor 4"
+"383","Stereoscope + safeTME","L12","CD20 protein
+vs. B-cells","spearmans",0.580330004342162,"Tumor 4"
+"384","Stereoscope + safeTME","L12","SMA protein
+vs. fibroblasts","spearmans",0.704841511072514,"Tumor 4"
+"385","Stereoscope + safeTME","L13","CD3 protein
+vs. total T-cells","spearmans",0.774086378737542,"Tumor 5"
+"386","Stereoscope + safeTME","L13","CD8 protein
+vs. CD8 T-cells","spearmans",0.641800060404712,"Tumor 5"
+"387","Stereoscope + safeTME","L13","CD68 protein
+vs. macrophages","spearmans",0.67351253397765,"Tumor 5"
+"388","Stereoscope + safeTME","L13","CD66b protein
+vs. neutrophils","spearmans",0.273935366958623,"Tumor 5"
+"389","Stereoscope + safeTME","L13","CD20 protein
+vs. B-cells","spearmans",-0.147991543340381,"Tumor 5"
+"390","Stereoscope + safeTME","L13","SMA protein
+vs. fibroblasts","spearmans",0.919963757173059,"Tumor 5"
+"391","Stereoscope + scRNAseq lung profiles","L09","CD3 protein
+vs. total T-cells","spearmans",0.436210131332082,"Tumor 1"
+"392","Stereoscope + scRNAseq lung profiles","L09","CD8 protein
+vs. CD8 T-cells","spearmans",NA,"Tumor 1"
+"393","Stereoscope + scRNAseq lung profiles","L09","CD68 protein
+vs. macrophages","spearmans",NA,"Tumor 1"
+"394","Stereoscope + scRNAseq lung profiles","L09","CD66b protein
+vs. neutrophils","spearmans",0.723639774859287,"Tumor 1"
+"395","Stereoscope + scRNAseq lung profiles","L09","CD20 protein
+vs. B-cells","spearmans",0.411444652908068,"Tumor 1"
+"396","Stereoscope + scRNAseq lung profiles","L09","SMA protein
+vs. fibroblasts","spearmans",0.468667917448405,"Tumor 1"
+"397","Stereoscope + scRNAseq lung profiles","L10","CD3 protein
+vs. total T-cells","spearmans",0.433487511563367,"Tumor 2"
+"398","Stereoscope + scRNAseq lung profiles","L10","CD8 protein
+vs. CD8 T-cells","spearmans",NA,"Tumor 2"
+"399","Stereoscope + scRNAseq lung profiles","L10","CD68 protein
+vs. macrophages","spearmans",NA,"Tumor 2"
+"400","Stereoscope + scRNAseq lung profiles","L10","CD66b protein
+vs. neutrophils","spearmans",0.29127351218008,"Tumor 2"
+"401","Stereoscope + scRNAseq lung profiles","L10","CD20 protein
+vs. B-cells","spearmans",0.374283071230342,"Tumor 2"
+"402","Stereoscope + scRNAseq lung profiles","L10","SMA protein
+vs. fibroblasts","spearmans",-0.0656799259944496,"Tumor 2"
+"403","Stereoscope + scRNAseq lung profiles","L11","CD3 protein
+vs. total T-cells","spearmans",0.535121800801727,"Tumor 3"
+"404","Stereoscope + scRNAseq lung profiles","L11","CD8 protein
+vs. CD8 T-cells","spearmans",NA,"Tumor 3"
+"405","Stereoscope + scRNAseq lung profiles","L11","CD68 protein
+vs. macrophages","spearmans",NA,"Tumor 3"
+"406","Stereoscope + scRNAseq lung profiles","L11","CD66b protein
+vs. neutrophils","spearmans",0.26241134751773,"Tumor 3"
+"407","Stereoscope + scRNAseq lung profiles","L11","CD20 protein
+vs. B-cells","spearmans",0.0899784150477952,"Tumor 3"
+"408","Stereoscope + scRNAseq lung profiles","L11","SMA protein
+vs. fibroblasts","spearmans",0.556460067838421,"Tumor 3"
+"409","Stereoscope + scRNAseq lung profiles","L12","CD3 protein
+vs. total T-cells","spearmans",0.677377333912288,"Tumor 4"
+"410","Stereoscope + scRNAseq lung profiles","L12","CD8 protein
+vs. CD8 T-cells","spearmans",NA,"Tumor 4"
+"411","Stereoscope + scRNAseq lung profiles","L12","CD68 protein
+vs. macrophages","spearmans",NA,"Tumor 4"
+"412","Stereoscope + scRNAseq lung profiles","L12","CD66b protein
+vs. neutrophils","spearmans",0.479917498914459,"Tumor 4"
+"413","Stereoscope + scRNAseq lung profiles","L12","CD20 protein
+vs. B-cells","spearmans",0.453538862353452,"Tumor 4"
+"414","Stereoscope + scRNAseq lung profiles","L12","SMA protein
+vs. fibroblasts","spearmans",0.0514546244029527,"Tumor 4"
+"415","Stereoscope + scRNAseq lung profiles","L13","CD3 protein
+vs. total T-cells","spearmans",0.762458471760797,"Tumor 5"
+"416","Stereoscope + scRNAseq lung profiles","L13","CD8 protein
+vs. CD8 T-cells","spearmans",NA,"Tumor 5"
+"417","Stereoscope + scRNAseq lung profiles","L13","CD68 protein
+vs. macrophages","spearmans",NA,"Tumor 5"
+"418","Stereoscope + scRNAseq lung profiles","L13","CD66b protein
+vs. neutrophils","spearmans",0.114315916641498,"Tumor 5"
+"419","Stereoscope + scRNAseq lung profiles","L13","CD20 protein
+vs. B-cells","spearmans",-0.279371790999698,"Tumor 5"
+"420","Stereoscope + scRNAseq lung profiles","L13","SMA protein
+vs. fibroblasts","spearmans",0.715342796738146,"Tumor 5"
