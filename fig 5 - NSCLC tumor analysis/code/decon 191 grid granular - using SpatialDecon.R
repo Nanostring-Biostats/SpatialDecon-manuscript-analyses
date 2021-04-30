@@ -308,14 +308,14 @@ svg(here("fig 5 - NSCLC tumor analysis/results/florets - cells in space - legend
 par(mar = c(0,0,0,0))
 # legend:
 plot(0, 0, col = 0, xlim = c(-2, 2), ylim = c(-1.75, 1.75), xaxt = "n", yaxt = "n", xlab = "", ylab = "",
-     bty = "n")
+     bty = "n", asp = 1)
 b = rep(1, length(immcells))
 names(b) = immcells
 angles = seq(0, 2 * pi, length.out = length(b) + 1)
 for (j in 1:length(b)) {
   tempangles = seq(angles[j] + 0.05, angles[j+1] - 0.05, length.out = 20)
-  xt = b[j] * cos(tempangles)
-  yt = b[j] *  sin(tempangles)
+  xt = b[j] * cos(tempangles) 
+  yt = b[j] *  sin(tempangles) 
   polygon(c(0, xt), c(0, yt), col = cellcols[names(b)[j]], border = "white")
   if (names(b)[j] == "monocytes.NC.I") {
     yt = yt - 0.08
@@ -323,7 +323,7 @@ for (j in 1:length(b)) {
   if (names(b)[j] == "plasma") {
     yt = yt + 0.08
   }
-  text(median(xt) * 1.4, median(yt) * 1.2, names(b)[j], cex = 1.1)
+  text(median(xt) * 1.4 + 0.2 * sign(xt[j]), median(yt) * 1.2, names(b)[j], cex = 1.3)
 }
 dev.off()
 
