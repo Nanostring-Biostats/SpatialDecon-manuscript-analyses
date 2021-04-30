@@ -10,13 +10,13 @@ library(umap)
 
 #### load grid data from earlier script:
 
-load("191 grid decon results.RData")
+load("data/191 grid decon results.RData")
 aoicols = c("chartreuse2", "darkcyan")  
 names(aoicols) = c("Tumor", "TME")
 
 
 # infer polygon:
-source("spaceplot utils.R")
+source("code/spaceplot utils.R")
 bound = getBoundary(annot$x, annot$y, marg = 0.1)
 
 #### model expression ~ cells -------------------------
@@ -54,7 +54,7 @@ for (atype in c("Tumor", "TME")) {
   }
 }
 
-save(ests, file = "gene vs cells nlm results.RData")
+save(ests, file = "results/gene vs cells nlm results.RData")
 
 # now get yhats:
 yhat = snr * NA
@@ -200,6 +200,9 @@ text(cors[showgenes], apply(resids[, roiindices$TME], 1, sd)[showgenes], showgen
      col = "red", cex = 1.25)
 dev.off()
 
+write.csv(data.frame(cor.with.cell.abundance = cors, 
+                     residual.sd = apply(resids[, roiindices$TME], 1, sd)),
+          file = "results/values for figure 6b.csv")
 
 
 
