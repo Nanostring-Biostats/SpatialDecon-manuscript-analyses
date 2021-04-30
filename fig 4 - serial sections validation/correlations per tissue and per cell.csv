@@ -362,9 +362,9 @@ vs. fibroblasts","cors",0.929420467696996,"Tumor 5"
 "181","Stereoscope + scRNAseq lung profiles","L09","CD3 protein
 vs. total T-cells","cors",0.477055032881582,"Tumor 1"
 "182","Stereoscope + scRNAseq lung profiles","L09","CD8 protein
-vs. CD8 T-cells","cors",0,"Tumor 1"
+vs. CD8 T-cells","cors",NA,"Tumor 1"
 "183","Stereoscope + scRNAseq lung profiles","L09","CD68 protein
-vs. macrophages","cors",0,"Tumor 1"
+vs. macrophages","cors",NA,"Tumor 1"
 "184","Stereoscope + scRNAseq lung profiles","L09","CD66b protein
 vs. neutrophils","cors",0.711477794188732,"Tumor 1"
 "185","Stereoscope + scRNAseq lung profiles","L09","CD20 protein
@@ -374,9 +374,9 @@ vs. fibroblasts","cors",0.363022845375304,"Tumor 1"
 "187","Stereoscope + scRNAseq lung profiles","L10","CD3 protein
 vs. total T-cells","cors",0.589223641059254,"Tumor 2"
 "188","Stereoscope + scRNAseq lung profiles","L10","CD8 protein
-vs. CD8 T-cells","cors",0,"Tumor 2"
+vs. CD8 T-cells","cors",NA,"Tumor 2"
 "189","Stereoscope + scRNAseq lung profiles","L10","CD68 protein
-vs. macrophages","cors",0,"Tumor 2"
+vs. macrophages","cors",NA,"Tumor 2"
 "190","Stereoscope + scRNAseq lung profiles","L10","CD66b protein
 vs. neutrophils","cors",0.397250594140249,"Tumor 2"
 "191","Stereoscope + scRNAseq lung profiles","L10","CD20 protein
@@ -386,9 +386,9 @@ vs. fibroblasts","cors",0.0967780820632478,"Tumor 2"
 "193","Stereoscope + scRNAseq lung profiles","L11","CD3 protein
 vs. total T-cells","cors",0.646075400003562,"Tumor 3"
 "194","Stereoscope + scRNAseq lung profiles","L11","CD8 protein
-vs. CD8 T-cells","cors",0,"Tumor 3"
+vs. CD8 T-cells","cors",NA,"Tumor 3"
 "195","Stereoscope + scRNAseq lung profiles","L11","CD68 protein
-vs. macrophages","cors",0,"Tumor 3"
+vs. macrophages","cors",NA,"Tumor 3"
 "196","Stereoscope + scRNAseq lung profiles","L11","CD66b protein
 vs. neutrophils","cors",0.257759532208065,"Tumor 3"
 "197","Stereoscope + scRNAseq lung profiles","L11","CD20 protein
@@ -398,9 +398,9 @@ vs. fibroblasts","cors",0.619729366570156,"Tumor 3"
 "199","Stereoscope + scRNAseq lung profiles","L12","CD3 protein
 vs. total T-cells","cors",0.588752625641972,"Tumor 4"
 "200","Stereoscope + scRNAseq lung profiles","L12","CD8 protein
-vs. CD8 T-cells","cors",0,"Tumor 4"
+vs. CD8 T-cells","cors",NA,"Tumor 4"
 "201","Stereoscope + scRNAseq lung profiles","L12","CD68 protein
-vs. macrophages","cors",0,"Tumor 4"
+vs. macrophages","cors",NA,"Tumor 4"
 "202","Stereoscope + scRNAseq lung profiles","L12","CD66b protein
 vs. neutrophils","cors",0.521978700910964,"Tumor 4"
 "203","Stereoscope + scRNAseq lung profiles","L12","CD20 protein
@@ -410,9 +410,9 @@ vs. fibroblasts","cors",-0.0327231428748367,"Tumor 4"
 "205","Stereoscope + scRNAseq lung profiles","L13","CD3 protein
 vs. total T-cells","cors",0.577196076735622,"Tumor 5"
 "206","Stereoscope + scRNAseq lung profiles","L13","CD8 protein
-vs. CD8 T-cells","cors",0,"Tumor 5"
+vs. CD8 T-cells","cors",NA,"Tumor 5"
 "207","Stereoscope + scRNAseq lung profiles","L13","CD68 protein
-vs. macrophages","cors",0,"Tumor 5"
+vs. macrophages","cors",NA,"Tumor 5"
 "208","Stereoscope + scRNAseq lung profiles","L13","CD66b protein
 vs. neutrophils","cors",0.0974189549495239,"Tumor 5"
 "209","Stereoscope + scRNAseq lung profiles","L13","CD20 protein
@@ -842,9 +842,9 @@ vs. fibroblasts","spearmans",0.919963757173059,"Tumor 5"
 "421","Stereoscope + scRNAseq lung profiles","L09","CD3 protein
 vs. total T-cells","spearmans",0.436210131332082,"Tumor 1"
 "422","Stereoscope + scRNAseq lung profiles","L09","CD8 protein
-vs. CD8 T-cells","spearmans",0,"Tumor 1"
+vs. CD8 T-cells","spearmans",NA,"Tumor 1"
 "423","Stereoscope + scRNAseq lung profiles","L09","CD68 protein
-vs. macrophages","spearmans",0,"Tumor 1"
+vs. macrophages","spearmans",NA,"Tumor 1"
 "424","Stereoscope + scRNAseq lung profiles","L09","CD66b protein
 vs. neutrophils","spearmans",0.723639774859287,"Tumor 1"
 "425","Stereoscope + scRNAseq lung profiles","L09","CD20 protein
@@ -854,9 +854,9 @@ vs. fibroblasts","spearmans",0.468667917448405,"Tumor 1"
 "427","Stereoscope + scRNAseq lung profiles","L10","CD3 protein
 vs. total T-cells","spearmans",0.433487511563367,"Tumor 2"
 "428","Stereoscope + scRNAseq lung profiles","L10","CD8 protein
-vs. CD8 T-cells","spearmans",0,"Tumor 2"
+vs. CD8 T-cells","spearmans",NA,"Tumor 2"
 "429","Stereoscope + scRNAseq lung profiles","L10","CD68 protein
-vs. macrophages","spearmans",0,"Tumor 2"
+vs. macrophages","spearmans",NA,"Tumor 2"
 "430","Stereoscope + scRNAseq lung profiles","L10","CD66b protein
 vs. neutrophils","spearmans",0.29127351218008,"Tumor 2"
 "431","Stereoscope + scRNAseq lung profiles","L10","CD20 protein
@@ -866,9 +866,9 @@ vs. fibroblasts","spearmans",-0.0656799259944496,"Tumor 2"
 "433","Stereoscope + scRNAseq lung profiles","L11","CD3 protein
 vs. total T-cells","spearmans",0.535121800801727,"Tumor 3"
 "434","Stereoscope + scRNAseq lung profiles","L11","CD8 protein
-vs. CD8 T-cells","spearmans",0,"Tumor 3"
+vs. CD8 T-cells","spearmans",NA,"Tumor 3"
 "435","Stereoscope + scRNAseq lung profiles","L11","CD68 protein
-vs. macrophages","spearmans",0,"Tumor 3"
+vs. macrophages","spearmans",NA,"Tumor 3"
 "436","Stereoscope + scRNAseq lung profiles","L11","CD66b protein
 vs. neutrophils","spearmans",0.26241134751773,"Tumor 3"
 "437","Stereoscope + scRNAseq lung profiles","L11","CD20 protein
@@ -878,9 +878,9 @@ vs. fibroblasts","spearmans",0.556460067838421,"Tumor 3"
 "439","Stereoscope + scRNAseq lung profiles","L12","CD3 protein
 vs. total T-cells","spearmans",0.677377333912288,"Tumor 4"
 "440","Stereoscope + scRNAseq lung profiles","L12","CD8 protein
-vs. CD8 T-cells","spearmans",0,"Tumor 4"
+vs. CD8 T-cells","spearmans",NA,"Tumor 4"
 "441","Stereoscope + scRNAseq lung profiles","L12","CD68 protein
-vs. macrophages","spearmans",0,"Tumor 4"
+vs. macrophages","spearmans",NA,"Tumor 4"
 "442","Stereoscope + scRNAseq lung profiles","L12","CD66b protein
 vs. neutrophils","spearmans",0.479917498914459,"Tumor 4"
 "443","Stereoscope + scRNAseq lung profiles","L12","CD20 protein
@@ -890,9 +890,9 @@ vs. fibroblasts","spearmans",0.0514546244029527,"Tumor 4"
 "445","Stereoscope + scRNAseq lung profiles","L13","CD3 protein
 vs. total T-cells","spearmans",0.762458471760797,"Tumor 5"
 "446","Stereoscope + scRNAseq lung profiles","L13","CD8 protein
-vs. CD8 T-cells","spearmans",0,"Tumor 5"
+vs. CD8 T-cells","spearmans",NA,"Tumor 5"
 "447","Stereoscope + scRNAseq lung profiles","L13","CD68 protein
-vs. macrophages","spearmans",0,"Tumor 5"
+vs. macrophages","spearmans",NA,"Tumor 5"
 "448","Stereoscope + scRNAseq lung profiles","L13","CD66b protein
 vs. neutrophils","spearmans",0.114315916641498,"Tumor 5"
 "449","Stereoscope + scRNAseq lung profiles","L13","CD20 protein

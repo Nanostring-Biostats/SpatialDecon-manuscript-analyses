@@ -260,8 +260,10 @@ for (tiss in unique(annot$tissue)) {
       cors[[name]][tiss, pname] = cor(tempbeta[annot$tissue == tiss], tempprot[annot$tissue == tiss], method = "pearson", use = "complete")
       spearmans[[name]][tiss, pname] = cor(tempbeta[annot$tissue == tiss], tempprot[annot$tissue == tiss], method = "spearman", use = "complete")
       # set NA's (from decon results with 0 variability) to zero:
-      cors[[name]][is.na(cors[[name]])] = 0
-      spearmans[[name]][is.na(spearmans[[name]])] = 0
+      if (name == "spatialDWLS") {
+        cors[[name]][is.na(cors[[name]])] = 0
+        spearmans[[name]][is.na(spearmans[[name]])] = 0
+      }
     }
   }
 }
