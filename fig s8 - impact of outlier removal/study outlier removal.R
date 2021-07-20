@@ -227,3 +227,6 @@ g = ggplot(data = plotdf[use, ], aes(x = method, y = value, fill = method, col =
   theme(legend.position="bottom") + theme(legend.text = element_text(size=16))
 print(g)
 dev.off()
+
+mean(cors[[1]])
+mean(cors[[2]])
