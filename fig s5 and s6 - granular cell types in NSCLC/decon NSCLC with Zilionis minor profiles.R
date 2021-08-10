@@ -78,10 +78,6 @@ names(aoicols) = c("Tumor", "TME")
 
 annot$aoicol = aoicols[annot$AOI.name]
 
-# custom gene annotations:
-#geneannot$inkilo = 1 * is.element(geneannot$TargetName, kilogenes)
-#geneannot$inicp = 1 * is.element(geneannot$TargetName, icpgenes)
-
 #### data alignment and subsetting ------------------------------
 
 # evaluate alignment between sample notes and raw
@@ -111,22 +107,12 @@ snr.sub.scale = snr.sub.scale[, include.aois]
 stopifnot(identical(colnames(raw), rownames(annot)))
 
 
-
 #### QC genes and AOIs: ------------------------
 
 negs = rownames(raw)[grepl("Neg", rownames(raw))]
 
 # flag genes that rise above 1.5 * background at least 2 times:
 genes.ever.above.lod = which(rowSums(snr > 1.5) >= 2)
-
-# look at quantiles:
-hist(apply(raw, 2, quantile, 0.75), breaks = 20, col = "grey")
-hist(apply(snr, 2, quantile, 0.75), breaks = 20, col = "grey")
-# from this, it looks like q75 is background for some AOIs, and signal from others.
-hist(apply(snr, 2, quantile, 0.85), breaks = 20, col = "grey")
-hist(apply(snr, 2, quantile, 0.95), breaks = 100, col = "grey")
-# and even the 95th percentile is often in bg.
-# have to conclude that q3 is totally unsuitable.
 
 # exclude AOIs with outlier low signal:
 signal.metric = apply(snr, 2, quantile, 0.85)
@@ -150,21 +136,12 @@ stopifnot(identical(colnames(snr.sub.scale), colnames(bg)))
 #### choose a normalization method ---------------------------------------
 # signal strength:
 pairs(annot[, c("NormFactorHK", "NormFactorQ3", "NormFactorNeg_01")], pch = 16, col = annot$aoicol)
-# all 3 methods look good for both tumor and TME, though risky to compare them directly.
+# all 3 methods look good for both tumor and TME, but it'll be risky to compare tumor vs. TME directly.
 
 # decision: go with neg normalization, in the theory that most genes are driven by background:
 norm = snr
 # expected background for norm matrix:
 bg.norm = replace(norm, TRUE, 1)
-
-# specific for ICP/CTA combo panel: look into genes in both panels:
-#inboth = rownames(geneannot)[(geneannot$inicp == 1) & (geneannot$inkilo == 1)]
-#par(mfrow = c(4,2))
-#for (g in sample(inboth, 20)) {
-#  plot(raw["NegProbe-CTP01", ], raw[g, ], ylab = g, col = annot$aoicol, pch = 16, xlab = "NegProbe-CTP01"); abline(0,1)
-#  plot(raw["NegProbe-Kilo", ], raw[g, ], ylab = g, col = annot$aoicol, pch = 16); abline(0,1)
-#}
-#par(mfrow = c(1,1))
 
 
 #### split AOI-level data into ROI-level data: --------------------------------------
@@ -233,14 +210,7 @@ res = spatialdecon(norm = negnorm,
 res$cell.counts = res$cell.counts$cell.counts
 save(res, file = "decon results from zilionis.minor plus gentles.RData")
 
-
-
-
-#### result in text: how many immune cells in tumor vs. TME?
-
-
 #### plot cells in space ------------------------------------------
-
 
 # infer polygon:
 bound = getBoundary(annot$x, annot$y, marg = 0.1)

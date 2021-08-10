@@ -144,11 +144,6 @@ for (i in 1:length(epsilons)) {
 save(betas, file = "alg2e results.RData")
 
 
-#### evaluate accuracy: -------------------------------
-
-# metric 1: mean cor with protein (show a heatmap for each eps)
-
-
 #### compare spatialdecon vs. protein in detail: -------------------------------------------
 
 # define cell-protein matches:
