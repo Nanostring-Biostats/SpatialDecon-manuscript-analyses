@@ -230,3 +230,145 @@ dev.off()
 
 mean(cors[[1]])
 mean(cors[[2]])
+
+
+
+#### now compare performance under various outlier thresholds -------------------------------
+
+
+# try other outlier thresholds:
+reslist = list(t3 = res)
+reslist[["t2"]] = spatialdecon(norm = norm[usegenes, ],
+                               raw = rna[usegenes, ],
+                               bg = replace(norm[usegenes, ], TRUE, 1), 
+                               is_pure_tumor = annot$AOI_type == "Tumor",
+                               n_tumor_clusters = 10,
+                               resid_thresh = 2) 
+reslist[["t4"]] = spatialdecon(norm = norm[usegenes, ],
+                               raw = rna[usegenes, ],
+                               bg = replace(norm[usegenes, ], TRUE, 1), 
+                               is_pure_tumor = annot$AOI_type == "Tumor",
+                               n_tumor_clusters = 10,
+                               resid_thresh = 4) 
+reslist[["t5"]] = spatialdecon(norm = norm[usegenes, ],
+                               raw = rna[usegenes, ],
+                               bg = replace(norm[usegenes, ], TRUE, 1), 
+                               is_pure_tumor = annot$AOI_type == "Tumor",
+                               n_tumor_clusters = 10,
+                               resid_thresh = 5) 
+reslist[["t6"]] = spatialdecon(norm = norm[usegenes, ],
+                               raw = rna[usegenes, ],
+                               bg = replace(norm[usegenes, ], TRUE, 1), 
+                               is_pure_tumor = annot$AOI_type == "Tumor",
+                               n_tumor_clusters = 10,
+                               resid_thresh = 5) 
+reslist[["tinf"]] = res2
+
+### compare performance:
+
+cors = spearmans = list()
+for (name in names(reslist)) {
+  cors[[name]] = spearmans[[name]] = matrix(NA, nrow = length(unique(annot$tissue)), ncol = length(cpmatch),
+                                            dimnames = list(unique(annot$tissue), names(cpmatch)))
+}
+
+for (tiss in unique(annot$tissue)) {
+  for (pname in names(cpmatch)) {
+    for (name in names(reslist)) {
+      tempcells = cpmatch[[pname]]
+      tempbeta = colSums(reslist[[name]]$beta[tempcells, rownames(pnorm), drop = F])
+      tempprot = pnorm[, pname]
+      cors[[name]][tiss, pname] = cor(tempbeta[annot$tissue == tiss], tempprot[annot$tissue == tiss], method = "pearson", use = "complete")
+      spearmans[[name]][tiss, pname] = cor(tempbeta[annot$tissue == tiss], tempprot[annot$tissue == tiss], method = "spearman", use = "complete")
+      cors[[name]] = replace(cors[[name]], is.na(cors[[name]]), 0)
+    }
+  }
+}
+
+round(sapply(cors, mean), 3)
+
+pheatmap(cors[[1]], display_numbers = T, cluster_rows = F, cluster_cols = F,
+         col = colorRampPalette(c("white", "dodgerblue"))(100), breaks = seq(0, 1, length.out = 101))
+pheatmap(cors[[2]], display_numbers = T, cluster_rows = F, cluster_cols = F,
+         col = colorRampPalette(c("white", "dodgerblue"))(100), breaks = seq(0, 1, length.out = 101))
+
+
+
+
+# assemble data frame for ggplot:
+method = tissue = protein = stat = value = c()
+for (obj in c("cors", "spearmans")) {
+  temp = get(obj)
+  for (name in names(temp)) {
+    for (tiss in rownames(temp[[name]])) {
+      method = c(method, rep(name, ncol(temp[[name]])))
+      tissue = c(tissue, rep(tiss, ncol(temp[[name]])))
+      protein = c(protein, colnames(temp[[name]]))
+      stat = c(stat, rep(obj, ncol(temp[[name]])))
+      value = c(value, temp[[name]][tiss, ])
+    }
+  }
+}
+
+plotdf = data.frame(method = method, tissue = tissue, protein = protein, stat = stat, value = value)
+
+# custom names
+plotdf$protein[plotdf$protein == "CD20"] = "CD20 protein\nvs. B-cells"
+plotdf$protein[plotdf$protein == "CD3"] = "CD3 protein\nvs. total T-cells"
+plotdf$protein[plotdf$protein == "CD8"] = "CD8 protein\nvs. CD8 T-cells"
+plotdf$protein[plotdf$protein == "CD68"] = "CD68 protein\nvs. macrophages"
+plotdf$protein[plotdf$protein == "CD66b"] = "CD66b protein\nvs. neutrophils"
+plotdf$protein[plotdf$protein == "SMA"] = "SMA protein\nvs. fibroblasts"
+plotdf$tumor = paste0("Tumor ", 1:5)[as.numeric(as.factor(plotdf$tissue))]
+plotdf$protein = factor(plotdf$protein, 
+                        levels = c("CD3 protein\nvs. total T-cells",
+                                   "CD8 protein\nvs. CD8 T-cells",
+                                   "CD20 protein\nvs. B-cells",
+                                   "CD68 protein\nvs. macrophages",
+                                   "CD66b protein\nvs. neutrophils",
+                                   "SMA protein\nvs. fibroblasts"))
+
+plotdf$method[plotdf$method == "t2"] = "Threshold = 2"
+plotdf$method[plotdf$method == "t3"] = "Threshold = 3"
+plotdf$method[plotdf$method == "t4"] = "Threshold = 4"
+plotdf$method[plotdf$method == "t5"] = "Threshold = 5"
+plotdf$method[plotdf$method == "t6"] = "Threshold = 6"
+plotdf$method[plotdf$method == "tinf"] = "Outliers retained"
+
+
+plotdf$method = factor(plotdf$method, levels = c(paste0("Threshold = ", 2:6), "Outliers retained"))
+
+colmap = c(
+  "Threshold = 2" = "darkviolet",
+  "Threshold = 3" = "red",
+  "Threshold = 4" = "darkgoldenrod3",
+  "Threshold = 5" = "cornflowerblue",
+  "Threshold = 6" = "dodgerblue4",
+  "Outliers retained" = "grey30")
+
+
+use = (plotdf$stat == "cors") 
+svg("serial sections - accuracy vs outlier threshold.svg", width = 9, height = 9)
+g = ggplot(data = plotdf[use, ], aes(x = method, y = value, fill = method, col = method, )) +  
+  geom_bar(alpha = 0.5, size = 1, stat = "identity") +
+  theme_few() + 
+  facet_grid(tumor ~ protein, scales = "free") +
+  scale_y_continuous(limits=c(-0.45, 1)) +
+  scale_x_discrete(labels = NULL) +
+  scale_fill_manual(values = colmap) + 
+  scale_color_manual(values = colmap, ) + 
+  labs(x = "Method", y = "Correlation") + 
+  theme(axis.title.x = element_text(size = 17), axis.title.y = element_text(size = 17),
+        strip.text.x = element_text(size = 12), strip.text.y = element_text(size = 12), 
+        legend.title = element_blank()) +
+  theme(legend.position="bottom") + theme(legend.text = element_text(size=16))
+print(g)
+dev.off()
+
+
+
+t.test(as.vector(cors[["t3"]]) - as.vector(cors[["t2"]]))
+t.test(as.vector(cors[["t3"]]) - as.vector(cors[["t4"]]))
+t.test(as.vector(cors[["t3"]]) - as.vector(cors[["t5"]]))
+t.test(as.vector(cors[["t3"]]) - as.vector(cors[["t6"]]))
+t.test(as.vector(cors[["t3"]]) - as.vector(cors[["tinf"]]))

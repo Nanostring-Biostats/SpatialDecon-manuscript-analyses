@@ -58,9 +58,10 @@ for (cell in c("T.CD4.naive","T.CD4.memory","T.CD8.naive",
 dev.off()
 
 
-florets(x = x, y = y, b = res$beta, col = cellcols[rownames(res$beta)])
+svg("Andersson decon results - florets.svg", height = 10, width = 10)
+florets(x = x, y = y, b = pmax(res$beta - 0.01, 0), col = cellcols[rownames(res$beta)], asp = 1, cex = 1.5)
 polygon(bound$x, bound$y, col = rgb(0,0,0,0.07), border = NA)
-
+dev.off()
 
 #### examine impact of background variable: -----------------------------
 
