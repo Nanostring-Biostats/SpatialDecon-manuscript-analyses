@@ -112,7 +112,7 @@ res2 = spatialdecon(norm = norm[usegenes, ],
 flagged = 1 * is.na(res$resids)
 nflagged = rowMeans(flagged[usegenes, ])
 svg("rate of outlier removal.svg", width = 4.5)
-boxplot(nflagged ~ is.element(usegenes, to.perturb), ylab = "Proportion of AOIs where gene is flagged",
+boxplot(nflagged ~ is.element(usegenes, to.perturb), ylab = "Proportion of regions where gene is flagged",
         xlab = "", names = c("Unperturbed\n(494 genes)", "Added noise\n(50 genes)"), cex.lab = 1.5, outline = F)
 points(1 + jitter(as.numeric(is.element(usegenes, to.perturb))), nflagged, pch = 16, col = alpha("darkblue", 0.7))
 dev.off()
@@ -164,6 +164,38 @@ pheatmap(cors[[2]], display_numbers = T, cluster_rows = F, cluster_cols = F,
 
 
 ## plot results: -------------------
+
+
+
+
+svg("outlier threshold vs. accuracy.svg", height = 8, width = 8)
+o = order(names(cors))
+par(mfrow = c(2,3))
+for (tiss in rownames(cors[[1]])) {
+  cols = brewer.pal(7, "Set1")[-6]
+  names(cols) = colnames(cors[[1]])
+  plot(c(0,0), xlim = c(1, length(cors)), ylim = range(unlist(cors)), col = 0,
+       xlab = "Ratio to default epsilon", ylab = "Correlation with protein",
+       cex.lab = 1.5, main = paste0("Sample ", tiss), xaxt = "n")
+  axis(1, 1:length(cors), names(cors)[o])
+  for (prot in colnames(cors[[1]])) {
+    tempcors = c()
+    for (i in 1:length(cors)) {
+      tempcors[i] = cors[[i]][tiss, prot]
+    }
+    lines(1:length(cors), tempcors[o], col = cols[prot])
+    points(1:length(cors), tempcors[o], col = cols[prot], pch = 16)
+  }
+  abline(v = 2, lty = 2)
+}
+frame()
+legend("center", lty = 2, pch = c(rep(16, length(cols)), NA), 
+       col = c(cols, 1), 
+       legend = c(names(cols), "default epsilon"), cex = 1.5)
+dev.off()
+
+
+
 
 # assemble data frame for ggplot:
 method = tissue = protein = stat = value = c()
@@ -220,7 +252,7 @@ g = ggplot(data = plotdf[use, ], aes(x = method, y = value, fill = method, col =
   scale_x_discrete(labels = NULL) +
   scale_fill_manual(values = colmap) + 
   scale_color_manual(values = colmap, ) + 
-  labs(x = "Method", y = "Correlation") + 
+  labs(x = "Outlier removal rule", y = "Correlation") + 
   theme(axis.title.x = element_text(size = 17), axis.title.y = element_text(size = 17),
         strip.text.x = element_text(size = 12), strip.text.y = element_text(size = 12), 
         legend.title = element_blank()) +
@@ -357,7 +389,7 @@ g = ggplot(data = plotdf[use, ], aes(x = method, y = value, fill = method, col =
   scale_x_discrete(labels = NULL) +
   scale_fill_manual(values = colmap) + 
   scale_color_manual(values = colmap, ) + 
-  labs(x = "Method", y = "Correlation") + 
+  labs(x = "Outlier removal rule", y = "Correlation") + 
   theme(axis.title.x = element_text(size = 17), axis.title.y = element_text(size = 17),
         strip.text.x = element_text(size = 12), strip.text.y = element_text(size = 12), 
         legend.title = element_blank()) +
