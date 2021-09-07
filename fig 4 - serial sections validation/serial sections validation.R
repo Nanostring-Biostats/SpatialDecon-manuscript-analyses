@@ -350,7 +350,7 @@ dev.off()
 write.csv(plotdf, file = "correlations per tissue and per cell.csv")
 
 # statistics:
-ps = deltas = means = cis = c()
+ps = deltas = means = cis = dfs = c()
 for (name in names(cors)) {
   mod = t.test(as.vector(cors$spatialdecon.modeltumor) - as.vector(cors[[name]]))
   ps[name] = mod$p.value
@@ -362,6 +362,10 @@ for (name in names(cors)) {
 
 # look at p-values vs. spatialdecon:
 print(ps)
+
+t.test(as.vector(cors$spatialdecon.modeltumor) - as.vector(cors$VSVR))
+t.test(as.vector(cors$spatialdecon.modeltumor) - as.vector(cors$NNLS))
+t.test(as.vector(cors$spatialdecon.modeltumor) - as.vector(cors$spatialdecon.ignoretumor))
 
 # compare two stereoscope runs:
 t.test(as.vector(cors$stereo) - as.vector(cors$stereo.lung))
