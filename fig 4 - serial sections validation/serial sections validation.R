@@ -7,6 +7,7 @@ library(pheatmap)
 library(RColorBrewer)
 library(ggplot2)
 library(ggthemes)
+library(Giotto)
 
 source("DWLS_functions.R")
 source("deconvolution functions - NNLS and vSVR and DWLS.R")
@@ -140,6 +141,47 @@ betas[["stereo.lung"]]["B.naive", ] = stereo.lung["tB.cells", colnames(betas[[1]
 betas[["stereo.lung"]]["T.CD4.naive", ] = stereo.lung["tT.cells", colnames(betas[[1]])]
 betas[["stereo.lung"]]["neutrophils", ] = stereo.lung["tNeutrophils", colnames(betas[[1]])]
 
+## run spatialDWLS:
+if (FALSE) {
+  # format as giotto object:
+  sign_matrix = SpatialDecon::safeTME[usegenes, ]
+  save(rna, norm, annot, sign_matrix, usegenes, file = "for debugging dwls.RData")
+  load("for debugging dwls.RData")
+  exprs_list = list(raw = rna[usegenes, ], normalized = norm[usegenes, ])
+  # giotto master version:
+  gobj = Giotto::createGiottoObject(
+    raw_exprs = exprs_list$raw,
+    #expression_feat = c('rna'),
+    spatial_locs = data.frame(sdimx = rnorm(nrow(annot)), 
+                              sdimy = rnorm(nrow(annot)),
+                              cell_ID = rownames(annot)),
+    cell_metadata = annot)
+  gobj@cell_metadata$rna$cluster = substr(annot$aoi.id, nchar(annot$aoi.id), nchar(annot$aoi.id))
+  
+  gobj <- normalizeGiotto(gobject = gobj)
+  gobj <- runPCA(gobject = gobj, feats_to_use = usegenes, scale_unit = F)
+  signPCA(gobj, genes_to_use = usegenes, scale_unit = F)
+  gobj <- createNearestNetwork(gobject = gobj, dimensions_to_use = 1:10, k = 10)
+  gobj <- doLeidenCluster(gobject = gobj, resolution = 0.4, n_iterations = 1000)
+  # run spatialdwls:
+  sdw = runDWLSDeconv(gobject = gobj,  
+                      expression_values = c("normalized"),
+                      logbase = 2,
+                      cluster_column = "leiden_clus",
+                      sign_matrix = sign_matrix,
+                      n_cell = 100,
+                      cutoff = 2,
+                      name = NULL,
+                      return_gobject = TRUE)
+  tempmat = (sdw@spatial_enrichment$DWLS)[,-1]
+  tempmat = apply(tempmat, 2, as.numeric)
+  rownames(tempmat) = sdw@spatial_enrichment$DWLS$cell_ID
+  save(tempmat, file = "spatialDWLS results.RData")
+}
+load("spatialDWLS results.RData")
+betas[["spatialDWLS"]] = t(as.matrix(tempmat))
+
+
 #### compare spatialdecon vs. protein in detail: -------------------------------------------
 
 # define cell-protein matches:
@@ -215,8 +257,13 @@ for (tiss in unique(annot$tissue)) {
       tempcells = cpmatch[[pname]]
       tempbeta = colSums(betas[[name]][tempcells, rownames(pnorm), drop = F])
       tempprot = pnorm[, pname]
-      cors[[name]][tiss, pname] = cor(tempbeta[annot$tissue == tiss], tempprot[annot$tissue == tiss], method = "pearson")
-      spearmans[[name]][tiss, pname] = cor(tempbeta[annot$tissue == tiss], tempprot[annot$tissue == tiss], method = "spearman")
+      cors[[name]][tiss, pname] = cor(tempbeta[annot$tissue == tiss], tempprot[annot$tissue == tiss], method = "pearson", use = "complete")
+      spearmans[[name]][tiss, pname] = cor(tempbeta[annot$tissue == tiss], tempprot[annot$tissue == tiss], method = "spearman", use = "complete")
+      # set NA's (from decon results with 0 variability) to zero:
+      if (name == "spatialDWLS") {
+        cors[[name]][is.na(cors[[name]])] = 0
+        spearmans[[name]][is.na(spearmans[[name]])] = 0
+      }
     }
   }
 }
@@ -262,10 +309,11 @@ plotdf$method[plotdf$method == "spatialdecon.ignoretumor"] = "SpatialDecon ignor
 plotdf$method[plotdf$method == "stereo"] = "Stereoscope + safeTME"
 plotdf$method[plotdf$method == "stereo.lung"] = "Stereoscope + scRNAseq lung profiles"
 plotdf$method[plotdf$method == "VSVR"] = "v-SVR"
+plotdf$method[plotdf$method == "spatialDWLS"] = "SpatialDWLS"
 
 plotdf$method = factor(plotdf$method, levels = c("SpatialDecon modelling tumor",
                                                  "SpatialDecon ignoring tumor",
-                                                 "NNLS", "v-SVR", "DWLS",
+                                                 "NNLS", "v-SVR", "DWLS", "SpatialDWLS",
                                                  "Stereoscope + safeTME",
                                                  "Stereoscope + scRNAseq lung profiles"))
 
@@ -275,6 +323,7 @@ colmap = c(
     "NNLS" = "grey30", 
     "v-SVR" = "chartreuse3", 
     "DWLS" = "darkviolet",
+    "SpatialDWLS" = "#330099",
     "Stereoscope + safeTME" = "dodgerblue4",
     "Stereoscope + scRNAseq lung profiles" = "cornflowerblue")
   
@@ -301,7 +350,7 @@ dev.off()
 write.csv(plotdf, file = "correlations per tissue and per cell.csv")
 
 # statistics:
-ps = deltas = means = cis = c()
+ps = deltas = means = cis = dfs = c()
 for (name in names(cors)) {
   mod = t.test(as.vector(cors$spatialdecon.modeltumor) - as.vector(cors[[name]]))
   ps[name] = mod$p.value
@@ -314,6 +363,10 @@ for (name in names(cors)) {
 # look at p-values vs. spatialdecon:
 print(ps)
 
+t.test(as.vector(cors$spatialdecon.modeltumor) - as.vector(cors$VSVR))
+t.test(as.vector(cors$spatialdecon.modeltumor) - as.vector(cors$NNLS))
+t.test(as.vector(cors$spatialdecon.modeltumor) - as.vector(cors$spatialdecon.ignoretumor))
+
 # compare two stereoscope runs:
 t.test(as.vector(cors$stereo) - as.vector(cors$stereo.lung))
 
@@ -321,16 +374,17 @@ t.test(as.vector(cors$stereo) - as.vector(cors$stereo.lung))
 # plot summary statistics:
 plotdf = data.frame(mean = means, ci = cis, method = names(means))
 # remove stereoscope + lung scRNAseq, which isn't comparable to the rest since it's missing cell types:
-plotdf = plotdf[!is.na(plotdf$mean), ]
+plotdf = plotdf[setdiff(rownames(plotdf), "stereo.lung"), ]
 # format names:
 plotdf$method[plotdf$method == "spatialdecon.modeltumor"] = "SpatialDecon modelling tumor"
 plotdf$method[plotdf$method == "spatialdecon.ignoretumor"] = "SpatialDecon ignoring tumor"
 plotdf$method[plotdf$method == "stereo"] = "Stereoscope + safeTME"
 plotdf$method[plotdf$method == "VSVR"] = "v-SVR"
+plotdf$method[plotdf$method == "spatialDWLS"] = "SpatialDWLS"
 
 plotdf$method = factor(plotdf$method, levels = c("SpatialDecon modelling tumor",
                                                  "SpatialDecon ignoring tumor",
-                                                 "NNLS", "v-SVR", "DWLS",
+                                                 "NNLS", "v-SVR", "DWLS", "SpatialDWLS",
                                                  "Stereoscope + safeTME")) 
 
 

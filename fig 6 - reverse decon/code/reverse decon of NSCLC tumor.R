@@ -10,13 +10,13 @@ library(umap)
 
 #### load grid data from earlier script:
 
-load("191 grid decon results.RData")
+load("data/191 grid decon results.RData")
 aoicols = c("chartreuse2", "darkcyan")  
 names(aoicols) = c("Tumor", "TME")
 
 
 # infer polygon:
-source("spaceplot utils.R")
+source("code/spaceplot utils.R")
 bound = getBoundary(annot$x, annot$y, marg = 0.1)
 
 #### model expression ~ cells -------------------------
@@ -54,7 +54,7 @@ for (atype in c("Tumor", "TME")) {
   }
 }
 
-save(ests, file = "gene vs cells nlm results.RData")
+save(ests, file = "results/gene vs cells nlm results.RData")
 
 # now get yhats:
 yhat = snr * NA
@@ -180,6 +180,7 @@ showgenes = c("MT1M", "CCL19", "ARG1", "PDCD1")
 
 
 #### fig 6b: plot cor vs resid sd --------------------------
+
 svg("results/genes - cor w cells vs. resid SD.svg")
 par(mar = c(5,5,1,1))
 plot(cors, apply(resids[, roiindices$TME], 1, sd), 
@@ -200,6 +201,9 @@ text(cors[showgenes], apply(resids[, roiindices$TME], 1, sd)[showgenes], showgen
      col = "red", cex = 1.25)
 dev.off()
 
+write.csv(data.frame(cor.with.cell.abundance = cors, 
+                     residual.sd = apply(resids[, roiindices$TME], 1, sd)),
+          file = "results/values for figure 6b.csv")
 
 
 
@@ -210,7 +214,7 @@ par(mfrow = c(2,2))
 yrange = 100
 for (gene in showgenes) {
   plot(yhat[gene, roiindices$TME] / median(yhat[gene, roiindices$TME]),
-       snr[gene, roiindices$TME] / median(snr[gene, roiindices$TME]),
+       yhat[gene, roiindices$TME] / median(yhat[gene, roiindices$TME]),
        col = colorresids(resids[gene, roiindices$TME]),
        pch = 16,
        log = "xy", 
@@ -222,8 +226,15 @@ for (gene in showgenes) {
 }
 dev.off()
 
-
-
+# rebuild plot data for "source data":
+tempgene = tempyhat = tempobs = c()
+for (gene in showgenes) {
+  tempgene = c(tempgene, rep(gene, length(roiindices$TME)))
+  tempyhat = c(tempyhat, yhat[gene, roiindices$TME] / median(yhat[gene, roiindices$TME]))
+  tempobs = c(tempobs, yhat[gene, roiindices$TME] / median(yhat[gene, roiindices$TME]))
+}
+plotdf = data.frame(gene = tempgene, yhat = tempyhat, observed = tempobs)
+write.csv(plotdf, "results/source_data_6c.csv")
 
 #### fig 6d-f: plot selected genes and their resids in space -----------------------------
 
@@ -241,6 +252,10 @@ for (gene in finalgenes) {
        xlab = paste0("Fitted ", gene),
        ylab = paste0("Observed ", gene))
   abline(0,1)
+  
+  # save source data:
+  plotdf = data.frame(yhat = yhat[gene, use], obs = snr[gene, use], resid = resids[gene, use])
+  write.csv(plotdf, file = paste0("results/source_data_6_", gene, ".csv"))
   
   # resid spaceplot:
   tempcols = c()
