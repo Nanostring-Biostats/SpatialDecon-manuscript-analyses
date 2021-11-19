@@ -31,6 +31,25 @@ hks = genorm$ranking[1:27]
 annot$hk.factor = exp(colMeans(log(raw[hks, ])))
 norm = sweep(raw, 2, annot$hk.factor, "/") * mean(annot$hk.factor)
 
+# demonstrate reproducibility:
+hek = annot$mixprop == 1
+ccrf = annot$mixprop == 0
+var.hek = apply(log2(pmax(norm[, hek],1)), 1, var)
+var.ccrf = apply(log2(pmax(norm[, ccrf],1)), 1, var)
+
+mean.hek = apply(log2(pmax(norm[, hek],1)), 1, mean)
+mean.ccrf = apply(log2(pmax(norm[, ccrf],1)), 1, mean)
+var.btw = apply(cbind(mean.hek, mean.ccrf), 1, var)
+var.within = rowMeans(cbind(var.hek, var.ccrf))
+svg("../results/within vs between cell line variance.svg")
+plot(var.btw, var.within, xlim= c(0,21), ylim = c(0,21), 
+     pch = 16, col = alpha("darkblue", 0.2),
+     xlab = "Between cell-line variance (biological variance)",
+     ylab = "Within cell-line variance (biological variance)",
+     cex.lab = 1.5)
+abline(0,1)
+dev.off()
+c(mean(var.btw), mean(var.within))
 #write.csv(norm, file = "../results/HK normalized data.csv")
 
 # estimate background in the normalized data: (separately for each probe pool):

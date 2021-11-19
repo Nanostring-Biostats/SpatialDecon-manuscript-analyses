@@ -20,6 +20,9 @@ head(annot)
 # load normalized data:
 negnorm = as.matrix(read.table(here("fig 5 - NSCLC tumor analysis/", paste0("data/", name, "_NegNorm_TargetCountMatrix.txt")),
                                header = T, row.names = 1))
+negnormall = negnorm
+
+
 
 # use just TME AOIs:
 use = rownames(annot)[annot$AOI.name == "TME"]
@@ -96,6 +99,61 @@ hist(logdat[, gene], breaks = 30, col = alpha("orange", 0.5), border = NA, main 
      yaxt = "n", cex.axis = 0.65)
 legend("center", legend = paste0("skewness = ", round(skewness(logdat[, gene]), 1)), bty = "n")
 dev.off()
+
+
+
+
+### aside for reviewer response: show that using TME focused the problem:
+
+# look at heteroscedasticity:
+svg("../results/heteroscedasticity.svg")
+istme = grepl("TME", colnames(negnormall))
+par(mfrow = c(2,2))
+plot(apply(negnormall, 1, mean), apply(negnormall, 1, sd), 
+     xlab = "Mean linear-scale expression", ylab = "SD of linear-scale expression",
+     main = "All regions", log = "xy")
+plot(apply(log2(negnormall), 1, mean), apply(log2(negnormall), 1, sd), 
+     xlab = "Mean log2-scale expression", ylab = "SD of log2-scale expression",
+     main = "All regions") #, xlim = c(2, 5.5), ylim = c(0,2.5))
+plot(apply(negnormall[, istme], 1, mean), apply(negnormall[, istme], 1, sd),
+     xlab = "Mean linear-scale expression", ylab = "SD of linear-scale expression",
+     main = "Microenvironment regions only", log = "xy") #, xlim = c(0,70), ylim = c(0,260))
+plot(apply(log2(negnormall)[, istme], 1, mean), apply(log2(negnormall)[, istme], 1, sd),
+     xlab = "Mean log2-scale expression", ylab = "SD of log2-scale expression",
+     main = "Microenvironment regions only") #, xlim = c(2, 5.5), ylim = c(0,2.5))
+dev.off()
+range(apply(negnormall, 1, sd))
+range(apply(negnormall[, istme], 1, sd))
+
+svg("../results/skewness.svg", height = 4)
+# look at skweness:
+par(mfrow = c(1,2))
+# all regions:
+skew.lin = apply(negnormall, 1, skewness)
+skew.log = apply(log2(pmax(negnormall, 1)), 1, skewness)
+denslin = density(skew.lin[!is.na(skew.lin)])
+denslog = density(skew.log[!is.na(skew.log)])
+plot(denslin, main = "All regions",
+     col = 0, xlab = "Skewness", ylab = "",
+     cex.lab = 1.2, cex.axis = 0.7, xlim = c(-2, 10), ylim = c(0, max(denslog$y)))
+polygon(denslin, col = alpha("grey50", 0.5), border = NA)
+polygon(denslog, col = alpha("orange", 0.5), border = NA)
+mean(skew.lin, na.rm = T)
+
+# TME only:
+skew.lin = apply(negnorm, 1, skewness)
+skew.log = apply(log2(pmax(negnorm, 1)), 1, skewness)
+denslin = density(skew.lin[!is.na(skew.lin)])
+denslog = density(skew.log[!is.na(skew.log)])
+plot(denslin,  main = "Microenvironment regions only", 
+     col = 0, xlab = "Skewness", ylab = "",
+     cex.lab = 1.2, cex.axis = 0.7 , xlim = c(-2, 10))
+polygon(denslin, col = alpha("grey50", 0.5), border = NA)
+polygon(denslog, col = alpha("orange", 0.5), border = NA)
+legend("topright", fill = alpha(c("grey50", "orange"), 0.5), 
+       legend = c("Linear-scale data", "Log-transformed data"), cex = .75)
+dev.off()
+mean(skew.lin, na.rm = T)
 
 
 
