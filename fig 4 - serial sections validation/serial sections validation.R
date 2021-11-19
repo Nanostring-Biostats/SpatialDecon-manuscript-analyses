@@ -372,36 +372,44 @@ t.test(as.vector(cors$stereo) - as.vector(cors$stereo.lung))
 
 
 # plot summary statistics:
-plotdf = data.frame(mean = means, ci = cis, method = names(means))
+meansdf = data.frame(mean = means, ci = cis, method = names(means))
 # remove stereoscope + lung scRNAseq, which isn't comparable to the rest since it's missing cell types:
-plotdf = plotdf[setdiff(rownames(plotdf), "stereo.lung"), ]
+meansdf = meansdf[setdiff(rownames(meansdf), "stereo.lung"), ]
 # format names:
-plotdf$method[plotdf$method == "spatialdecon.modeltumor"] = "SpatialDecon modelling tumor"
-plotdf$method[plotdf$method == "spatialdecon.ignoretumor"] = "SpatialDecon ignoring tumor"
-plotdf$method[plotdf$method == "stereo"] = "Stereoscope + safeTME"
-plotdf$method[plotdf$method == "VSVR"] = "v-SVR"
-plotdf$method[plotdf$method == "spatialDWLS"] = "SpatialDWLS"
+meansdf$method[meansdf$method == "spatialdecon.modeltumor"] = "SpatialDecon modelling tumor"
+meansdf$method[meansdf$method == "spatialdecon.ignoretumor"] = "SpatialDecon ignoring tumor"
+meansdf$method[meansdf$method == "stereo"] = "Stereoscope + safeTME"
+meansdf$method[meansdf$method == "VSVR"] = "v-SVR"
+meansdf$method[meansdf$method == "spatialDWLS"] = "SpatialDWLS"
 
-plotdf$method = factor(plotdf$method, levels = c("SpatialDecon modelling tumor",
+meansdf$method = factor(meansdf$method, levels = c("SpatialDecon modelling tumor",
                                                  "SpatialDecon ignoring tumor",
                                                  "NNLS", "v-SVR", "DWLS", "SpatialDWLS",
                                                  "Stereoscope + safeTME")) 
+rownames(meansdf) = meansdf$method
 
+use = (plotdf$stat == "cors") & (plotdf$method != "Stereoscope + scRNAseq lung profiles")
+plotdf = plotdf[use, ]
+plotdf$method = factor(plotdf$method, levels = setdiff(levels(plotdf$method), "Stereoscope + scRNAseq lung profiles"))
+svg("serial sections - mean correlation.svg", height = 9, width = 4)
+par(mar = c(16,5,2,1))
+boxplot(plotdf$value ~ plotdf$method, col = 0, border = 0, las = 2, xlab = "",
+        ylab = "Correlation", cex.lab = 1.5)
+for (i in 1:3) {
+  rect(i*2-0.5, -0.6, i*2+0.5, 1.1, col = alpha("grey80", 0.4), border = 0)
+}
+points(jitter(as.numeric(plotdf$method)), plotdf$value, col = alpha(colmap[plotdf$method], 0.5),
+       pch = 16)
+for (i in 1:length(levels(plotdf$method))) {
+  lwd = 1.5
+  name = levels(plotdf$method)[i]
+  lines(i + c(-1,1)*0.3, rep(meansdf[name, "mean"], 2), lwd = lwd)
+  lines(i + c(-1,1)*0.2, rep(meansdf[name, "mean"] + meansdf[name, "ci"], 2), lwd = lwd)
+  lines(i + c(-1,1)*0.2, rep(meansdf[name, "mean"] - meansdf[name, "ci"], 2), lwd = lwd)
+  lines(rep(i, 2), meansdf[name, "mean"] + c(-1,1) * meansdf[name, "ci"], lwd = lwd)
+}
 
-svg("serial sections - mean correlation.svg", height = 9, width = 2.5)
-g = ggplot(data = plotdf, aes(x = method, y = mean, fill = method, col = method)) +  
-  geom_bar(alpha = 0.5, size = 1, stat = "identity", show.legend = FALSE) +
-  theme_few() + 
-  scale_y_continuous(limits=c(0, 0.85)) +
-  #scale_x_discrete(labels = NULL) +
-  scale_fill_manual(values = colmap) + 
-  scale_color_manual(values = colmap, ) + 
-  labs(x = "", y = "Mean correlation") + 
-  theme(axis.title.x = element_text(size = 17), axis.title.y = element_text(size = 17),
-        strip.text.x = element_text(size = 16), legend.title = element_blank()) +
-  theme(axis.text.x = element_text(angle=-90, size = 15)) +
-  geom_errorbar(aes(ymin=mean-2*ci, ymax=mean + 2*ci), width=.2,
-                position=position_dodge(.9), col = I("black"))
-print(g)
 dev.off()
+
+
 

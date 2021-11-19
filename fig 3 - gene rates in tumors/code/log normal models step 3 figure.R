@@ -219,5 +219,8 @@ ggsave(file = here("fig 3 - gene rates in tumors", "output", paste0("combined.pn
        width = 10, height = 11)
 
 
+ggsave(file = here("fig 3 - gene rates in tumors", "output", paste0("combined.pdf")),
+       width = 10, height = 11)
+
 
 
