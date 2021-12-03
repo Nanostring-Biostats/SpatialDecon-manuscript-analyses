@@ -87,6 +87,12 @@ colorresids = function(x) {
   return(col)
 }
 
+# color legend:
+rlevels = seq(-1.5,1.5,0.5)
+svg("results/color legend.svg", width = 4, height = 5)
+frame()
+legend('center', pch = 16, col = c("white", colorresids(rlevels)), legend = c("Residual value", rlevels), cex = 2, bty = "n")
+dev.off()
 # 
 gene = "COL1A1"
 svg("results/cartoon of residuals.svg", width = 6, height = 6)
