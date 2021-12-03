@@ -1,3 +1,4 @@
+library(svglite)
 library(tidyr)
 library(dplyr)
 library(ggplot2)
@@ -209,7 +210,7 @@ pb <- ggplot(mat2, aes(x = mean, y = beta0)) +
 
 # Combine the heatmap, ridgeline plot, and the scatterplots into one plot
 gb1 <- pl + theme(plot.margin = unit(c(1.2,0.5,0,0), "cm"))
-gb2 <- grid.grabExpr(draw(pr, padding  = unit(c(1.1, 0, 0, 0), "cm")))
+gb2 <- grid.grabExpr(draw(pr, padding  = unit(c(1.1, 0, 0, 1), "cm"))) #+ theme(plot.margin = unit(c(1.2,0.5,0,1), "cm"))
 
 p <- (gb1 + gb2 + plot_layout(widths = c(1, 2)))/pb +  
   plot_layout(heights = c(1, 1)) + plot_annotation(tag_levels = c('a'))
@@ -222,5 +223,8 @@ ggsave(file = here("fig 3 - gene rates in tumors", "output", paste0("combined.pn
 ggsave(file = here("fig 3 - gene rates in tumors", "output", paste0("combined.pdf")),
        width = 10, height = 11)
 
+
+#ggsave(file = here("fig 3 - gene rates in tumors", "output", paste0("combined.svg")),
+#       width = 10, height = 11)
 
 
