@@ -155,6 +155,7 @@ mat2$mean <- rowSums(sapply(mergedatList,
 mat2$beta0 <- rowMeans(sapply(mergedatList, function(list) list$beta0))
 genecolor <- alpha("#E74C3C", 0.5) #alpha("orange", 0.5)
 
+
 ## prepare plotting specifications for scatter plots of eight panels 
 plot_list <- rep(list(mat2), 8)
 for(k in 1:8){
@@ -163,8 +164,10 @@ for(k in 1:8){
                             "Danaher (2017)", "SafeTME")[k]
   
   
-  transgrey <- adjustcolor("#e6e6e6", alpha.f = 0.25) #adjustcolor("grey", alpha.f = 0.1)
+  #transgrey <- adjustcolor("#e6e6e6", alpha.f = 0.25) #adjustcolor("grey", alpha.f = 0.1)
+  transgrey <- rgb(0,0,0,0)
   plot_list[[k]]$color <- transgrey
+  #plot_list[[k]]$color <- rgb(0,0,0,0)
   
   if (k == 7){
     geneshighlight <- read_excel(here("fig 3 - gene rates in tumors", 
@@ -191,10 +194,12 @@ mat2$title <- factor(mat2$title,
                      levels = c("CIBERSORT", "EPIC", "MCP-counter",
                                 "quanTIseq", "Timer", "xCell", 
                                 "Danaher (2017)", "SafeTME"))
+# remove genes outside of gene lists:
+mat2 <- mat2[mat2$color == genecolor, ]
 
 ## combine all eight scatter plots into one plot
 pb <- ggplot(mat2, aes(x = mean, y = beta0)) +
-  geom_point(aes(color = color),
+  geom_point(aes(color = color), alpha = 0.75,
              size = ifelse(mat2$color==transgrey, 0.25, 1))+
   scale_color_identity(guide = "legend")+
   guides(size = guide_legend(override.aes = list(size = 5, alpha = 1))) +
@@ -215,9 +220,9 @@ gb2 <- grid.grabExpr(draw(pr, padding  = unit(c(1.1, 0, 0, 1), "cm"))) #+ theme(
 p <- (gb1 + gb2 + plot_layout(widths = c(1, 2)))/pb +  
   plot_layout(heights = c(1, 1)) + plot_annotation(tag_levels = c('a'))
 
-ggsave(file = here("fig 3 - gene rates in tumors", "output", paste0("combined.png")),
-       dpi = 300, type = "cairo",
-       width = 10, height = 11)
+#ggsave(file = here("fig 3 - gene rates in tumors", "output", paste0("combined.png")),
+#       dpi = 300, type = "cairo",
+#       width = 10, height = 11)
 
 
 ggsave(file = here("fig 3 - gene rates in tumors", "output", paste0("combined.pdf")),
